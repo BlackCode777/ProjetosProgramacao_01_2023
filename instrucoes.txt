@@ -1,8 +1,15 @@
+# Criando aplicação Passaro Urbano
+
 # Instruções de como usar o repositório
 
 referencia
 https://github.com/angular/angular-cli
+https://ng-bootstrap.github.io/#/getting-started
+https://www.favicon-generator.org/
 
 cd estudos_com_angular
 
 npm install
+
+# Criação de component
+$ ng g c topo --spec=false
