@@ -1,1 +1,8 @@
 # Instruções de como usar o repositório
+
+referencia
+https://github.com/angular/angular-cli
+
+cd estudos_com_angular
+
+npm install
