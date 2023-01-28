@@ -7,7 +7,7 @@ import { Oferta } from '../models/oferta.model';
 
 export class OfertasService {
 
-        public ofertas: Array<Oferta> = [
+        public oferta: Array<Oferta> = [
                         {
                                 id: 0,
                                 categoria: "restaurante",
@@ -17,10 +17,10 @@ export class OfertasService {
                                 valor: 29.90,
                                 destaque: true,
                                 imagens: [
-                                        {url: "/assets/ofertas/1/img1.jpg"},
-                                        {url: "/assets/ofertas/1/img2.jpg"},
-                                        {url: "/assets/ofertas/1/img3.jpg"},
-                                        {url: "/assets/ofertas/1/img4.jpg"}
+                                        {url: "/assets/ofertas/imagem_1/img_hambuer.jpg"},
+                                         {url: "/assets/ofertas/imagem_1/img2.jpg"},
+                                         {url: "/assets/ofertas/imagem_1/img3.jpg"},
+                                         {url: "/assets/ofertas/imagem_1/img4.jpg"}
                                 ]
                         },
                         {
@@ -60,9 +60,21 @@ export class OfertasService {
       
 
         public getOfertas(): Array<Oferta>{
-                return this.ofertas;
-
+                return this.oferta;
         }
+        
+        // TODO - melhoria
+        public getOfertas_2(): Promise<Oferta[]>{
+                return new Promise( ( resolve, reject ) => {  // A promisse tem um objeto que usa 2 funções " resolve, reject "                        
+                        let deu_certo = true
+                        if( deu_certo){
+                                setTimeout( () => resolve( this.oferta ), 3000)                                
+                        } else {
+                                reject({ codigo_erro: 404, mensagem_erro: "Servidor não encontrado" })
+                        }                                
+                })
+        }
+
 
   constructor() { }
 }

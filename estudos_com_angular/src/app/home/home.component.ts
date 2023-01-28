@@ -18,7 +18,18 @@ export class HomeComponent {
         ){}
 
         ngOnInit(){
-                this.ofertaModel = this.ofertasService.getOfertas()
+                // this.ofertaModel = this.ofertasService.getOfertas()
+                // console.log(this.ofertaModel)
+                // TODO - melhoria
+                this.ofertasService.getOfertas_2()
+                        // Aqui é um parâmetro da Aroow Function
+                        .then(( ofertas: Oferta[] ) => { 
+                                console.log("FUNCAO RESOLVE, RESOLVIDA EM 3 SEGUNDOS")
+                                this.ofertaModel = ofertas 
+                        })
+                        .catch(( param: any ) => {
+                                console.log(param)
+                        })
         }
 
 }

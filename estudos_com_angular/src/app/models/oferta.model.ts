@@ -6,6 +6,10 @@ export class Oferta{
         public anunciante!: string;
         public valor!: number;
         public destaque!: boolean;
-        public imagens!: Array<Object>; 
+        public imagens: Array<any>; 
+
+        constructor( imagens:Array<any> ){
+                this.imagens = imagens
+        }
 
 }
