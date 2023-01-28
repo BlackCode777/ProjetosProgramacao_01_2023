@@ -17,19 +17,20 @@ export class HomeComponent {
                 private ofertasService: OfertasService
         ){}
 
-        ngOnInit(){
+        async ngOnInit(){
                 // this.ofertaModel = this.ofertasService.getOfertas()
                 // console.log(this.ofertaModel)
                 // TODO - melhoria
-                this.ofertasService.getOfertas_2()
-                        // Aqui é um parâmetro da Aroow Function
-                        .then(( ofertas: Oferta[] ) => { 
-                                console.log("FUNCAO RESOLVE, RESOLVIDA EM 3 SEGUNDOS")
-                                this.ofertaModel = ofertas 
-                        })
-                        .catch(( param: any ) => {
-                                console.log(param)
-                        })
+                await this.asincMethodGetData();
+                
         }
 
+
+        private async asincMethodGetData() {
+                try {
+                        this.ofertaModel = await this.ofertasService.getOfertas_2();
+                } catch (error) {
+                        console.error(error);
+                }
+        }
 }
