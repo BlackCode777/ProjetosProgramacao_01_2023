@@ -1,13 +1,42 @@
-import { Injectable } from '@angular/core';
+import { ErrorHandler, Injectable } from '@angular/core';
 import { Oferta } from '../models/oferta.model';
 
-@Injectable({
-  providedIn: 'root'
-})
+//import 'rxjs/operators/promise'  //rxjs/operators/toPromise
+import { HttpClient } from '@angular/common/http';
+import { Observable, catchError, map, retry } from 'rxjs';
 
+@Injectable()
 export class OfertasService {
+      
+  public baseUrl: string = "http://localhost:3000/ofertas"
 
-        public oferta: Array<Oferta> = [
+  //public ofertas!: Oferta[]
+
+  constructor( public http: HttpClient ) { }
+
+  getData(): Observable<Oferta>{
+        return this.http.get<Oferta>(this.baseUrl)
+  }
+
+}
+
+/**
+ * 
+ * 
+// TODO - melhoria
+public getOfertas_2(): Promise<Oferta[]>{
+        return new Promise( ( resolve, reject ) => {  // A promisse tem um objeto que usa 2 funções " resolve, reject "                        
+                let deu_certo = true
+                if( deu_certo){
+                        setTimeout( () => resolve( this.oferta ), 3000)                                
+                } else {
+                        reject({ codigo_erro: 404, mensagem_erro: "Servidor não encontrado" })
+                }                                
+        })
+}
+ * 
+ * 
+ * public oferta: Array<Oferta> = [
                         {
                                 id: 0,
                                 categoria: "restaurante",
@@ -36,8 +65,7 @@ export class OfertasService {
                                         {url: "/assets/ofertas/2/img2.jpg"},
                                         {url: "/assets/ofertas/2/img3.jpg"},
                                         {url: "/assets/ofertas/2/img4.jpg"}
-                                ]
-                        
+                                ]                        
                         },
                         {
                                 id: 2,
@@ -57,24 +85,4 @@ export class OfertasService {
                                 ]
                         }
                 ]
-      
-
-        public getOfertas(): Array<Oferta>{
-                return this.oferta;
-        }
-        
-        // TODO - melhoria
-        public getOfertas_2(): Promise<Oferta[]>{
-                return new Promise( ( resolve, reject ) => {  // A promisse tem um objeto que usa 2 funções " resolve, reject "                        
-                        let deu_certo = true
-                        if( deu_certo){
-                                setTimeout( () => resolve( this.oferta ), 3000)                                
-                        } else {
-                                reject({ codigo_erro: 404, mensagem_erro: "Servidor não encontrado" })
-                        }                                
-                })
-        }
-
-
-  constructor() { }
-}
+ */

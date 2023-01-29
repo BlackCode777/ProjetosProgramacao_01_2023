@@ -7,6 +7,9 @@ import { TopoComponent } from './topo/topo.component';
 import { HomeComponent } from './home/home.component';
 import { RodapeComponent } from './rodape/rodape.component';
 
+
+import {HttpClientModule} from '@angular/common/http';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -14,9 +17,10 @@ import { RodapeComponent } from './rodape/rodape.component';
     HomeComponent,
     RodapeComponent
   ],
-  imports: [
-    BrowserModule,
-    NgbModule
+  imports: [        
+        HttpClientModule,
+        BrowserModule,
+        NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]
