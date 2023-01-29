@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { OfertasService } from '../services/ofertas.service';
 import { Oferta } from '../models/oferta.model';
+//import { ThisReceiver } from '@angular/compiler';
 
 @Component({
   selector: 'app-home',
@@ -11,26 +12,20 @@ import { Oferta } from '../models/oferta.model';
 
 export class HomeComponent {
 
-        public ofertaModel!: Oferta[]; 
+        public oferta!: Oferta[];  
 
-        constructor(
-                private ofertasService: OfertasService
-        ){}
+        constructor( private ofertasService: OfertasService ){}
 
-        async ngOnInit(){
-                // this.ofertaModel = this.ofertasService.getOfertas()
-                // console.log(this.ofertaModel)
+        ngOnInit(){
                 // TODO - melhoria
-                await this.asincMethodGetData();
-                
+                //this.asincMethodGetData();                
         }
 
-
-        private async asincMethodGetData() {
-                try {
-                        this.ofertaModel = await this.ofertasService.getOfertas_2();
-                } catch (error) {
-                        console.error(error);
-                }
+        getMethodObservable(){
+                this.ofertasService.getData().subscribe( result => {
+                        return this.oferta.concat(result);
+                })
         }
+        
+
 }
