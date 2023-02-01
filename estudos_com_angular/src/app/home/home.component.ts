@@ -18,14 +18,59 @@ export class HomeComponent {
 
         ngOnInit(){
                 // TODO - melhoria
-                //this.asincMethodGetData();                
+                //this.getMethodObservable();                  
+                //this.resultIsPowerTwo();   
         }
 
         getMethodObservable(){
-                this.ofertasService.getData().subscribe( result => {
-                        return this.oferta.concat(result);
+                this.ofertasService.getData()
+                .subscribe(  data => {
+                        this.oferta.push(data)
                 })
         }
+
+
+
+       
         
 
 }
+
+/**
+ * 
+ *         private resultIsPowerTwo() {
+                if (this.isPowerTwo(100) == true) {console.log("Yes" + "<br/>")}
+                else { console.log("No" + "<br/>") }
+                if (this.isPowerTwo(120) == true) {console.log("Yes" + "<br/>") }
+                else {console.log("No" + "<br/>")}
+        }
+ * 
+ *
+ isPowerTwo( nPower: number){
+        let cnt = 0
+        while( nPower > 0 ){
+                if( ( nPower & 1) == 1 ){
+                        cnt ++;
+                }
+                nPower = nPower >> 1;
+        }
+        if( cnt == 1 ){
+                return true
+        }
+        return false
+}
+ * 
+ * 
+        public options = [
+                { id: 1, name: 'Option 1' },
+                { id: 2, name: 'Option 2' },
+                { id: 3, name: 'Option 3' },
+        ];
+        public selectedOption!: number;
+        public tableData = [
+                { id: 1, name: 'Item 1', description: 'This is item 1' },
+                { id: 2, name: 'Item 2', description: 'This is item 2' },
+                { id: 3, name: 'Item 3', description: 'This is item 3' },
+        ]
+ * 
+ */
