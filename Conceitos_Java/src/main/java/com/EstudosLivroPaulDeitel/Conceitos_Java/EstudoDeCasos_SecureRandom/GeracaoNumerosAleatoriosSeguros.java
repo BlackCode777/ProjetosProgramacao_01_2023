@@ -11,12 +11,13 @@ public class GeracaoNumerosAleatoriosSeguros {
   }
 
   static double calcRadius(double valor1, double valor2) {
-        Scanner input = new Scanner(System.in);
+    Scanner input = new Scanner(System.in);
 
-        System.out.println("Digite um nnumero para o Raio >>> ");
-        double radius = input.nextDouble();
-        double volume = (valor1 / valor2) * Math.PI * Math.pow(radius, 3);
-        return volume;
+    System.out.println("Digite um nnumero para o Raio >>> ");
+
+    double radius = input.nextDouble();
+    double volume = (valor1 / valor2) * Math.PI * Math.pow(radius, 3);
+    return volume;
   }
 
   int product() {
