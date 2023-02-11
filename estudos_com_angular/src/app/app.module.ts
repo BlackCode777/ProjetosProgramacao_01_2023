@@ -9,13 +9,15 @@ import { RodapeComponent } from './rodape/rodape.component';
 
 
 import {HttpClientModule} from '@angular/common/http';
+import { BubbleSortAlgorithmComponent } from './bubble-sort-algorithm/bubble-sort-algorithm.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TopoComponent,
     HomeComponent,
-    RodapeComponent
+    RodapeComponent,
+    BubbleSortAlgorithmComponent
   ],
   imports: [        
         HttpClientModule,
