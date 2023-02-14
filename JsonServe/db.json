@@ -1,4 +1,16 @@
 {
+        "pedido":[
+                {
+                        "id":0,
+                        "idCliente": 12,
+                        "nomeProduto":"casca de banana"
+                },
+                {
+                        "id":1,
+                        "idCliente": 102,
+                        "nomeProduto":"camisa de malha"
+                }
+        ],
         "ofertas" :  [
                 {
                         "id": 0,
