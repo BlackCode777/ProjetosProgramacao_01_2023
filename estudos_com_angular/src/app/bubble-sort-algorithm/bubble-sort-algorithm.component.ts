@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { Pedido } from './model/arrayOBJ1.model';
+import { TogettherArray } from './model/togettherArray.model';
+import { EstudoangularserviceService } from '../services/estudoangularservice.service';
 
 @Component({
   selector: 'app-bubble-sort-algorithm',
@@ -6,35 +9,37 @@ import { Component } from '@angular/core';
   styleUrls: ['./bubble-sort-algorithm.component.css']
 })
 export class BubbleSortAlgorithmComponent  {
-        callback: any;
+        url!: string;
+        pedido: Pedido = new Pedido() // >>> "http://localhost:3000/pedido"
+        acessoArrayTOgetther: TogettherArray = new TogettherArray();        
+        constructor(private estudoangularserviceService: EstudoangularserviceService ){ }
 
-        array = ["carro", 12, true, "mulher"]
+        ngOnInit(){
+                //this.FunctSort(this.array);
+        }
 
-        constructor(){}
+        get(){
+                this.estudoangularserviceService.getPedido().subscribe( result => {
+                        this.pedido = result
+                })
+        }
 
         FunctSort( originalARRAY: any[] ): any[]{
-
                 let len = originalARRAY.length;
-                console.log("valores do len >>> ",len)
-
+                console.log("valores do (len) >>> ",len)
                 for( let i=0; i<len; i++ ){
                         console.log(" no loof for (i)>>>  ",i)
                         for( let j=0; j<len; j++ ){
-                                console.log(" no loof for (j)>>>  ",j)
-                                
+                                console.log(" no loof for (j)>>>  ",j)                                
                                 if( originalARRAY[j] > originalARRAY[j] + 1 ){
-
                                         let temp = originalARRAY[j];
                                         originalARRAY[j] = originalARRAY[ j+1 ];
                                         originalARRAY[ j+1 ] = temp;
-
-                                        console.log("valores do temp >>> ",temp)
+                                        console.log("valores do (temp) >>> ",temp)
                                 }
                         }
                 }
-
                 return originalARRAY;
-
         }
 
 }

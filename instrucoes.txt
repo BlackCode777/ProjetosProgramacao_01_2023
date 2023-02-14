@@ -1,7 +1,9 @@
+
+#json-server --watch db.json
+
 # Criando aplicação Passaro Urbano
 
 # Rodando json server
-
 
 # Instruções de como usar o repositório
 
@@ -16,3 +18,39 @@ npm install
 
 # Criação de component
 $ ng g c topo --spec=false
+
+**********************************************************************
+
+
+  get(url: string): Observable<any> {
+    return this.http.get(url);
+  }
+
+  //metodo post httpclient para conectar em API
+  post(url: string, data: any): Observable<any> {
+    return this.http.post(url, data);
+  }
+
+  //metodo put httpclient para conectar em API
+  put(url: string, data: any): Observable<any> {
+    return this.http.put(url, data);
+  }
+
+  //metodo delete httpclient para conectar em API
+  delete(url: string): Observable<any> {
+    return this.http.delete(url);
+  }
+
+   //metodo patch httpclient para conectar em API
+   patch(url: string, data: any): Observable<any> {
+    return this.http.patch(url, data);
+
+*************************************************
+
++// const obj = {
++//   name: "John",
++//   age: 30,
++//   city: "New York"
++// };
++
++// const keys = Object.keys(obj); // ["name", "age", "city"];
