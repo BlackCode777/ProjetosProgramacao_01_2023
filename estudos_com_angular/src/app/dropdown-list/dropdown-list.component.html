@@ -1,2 +1,27 @@
-<p>dropdown-list works!</p>
+
+<h2>Testes de Emissão de eventos </h2>
+
+<div class="container">
+
+        <div>
+                <div  class="col-3"  > 
+                        <!--  [(ngModel)]="foodsNgModel.name"-->
+                        <label>DropDown precisa ser ouvido pelo input</label>
+                        <select  #listDropDown >
+                                <option *ngFor="let food of foods" [value]="food.name"> 
+                                        {{food.name}} 
+                                </option>
+                        </select>      
+                </div>
+                <div  class="col-3">
+                        <div><label>Input que escuta os eventos do dropdown</label> </div>
+                        <input type="text" style="width: 15rem;"
+                                (ngModel)="listDropDown"
+                        >
+                </div>
+        </div>
+        
+</div>
+<br>
+<br>
 
