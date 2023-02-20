@@ -10,6 +10,10 @@ import { RodapeComponent } from './rodape/rodape.component';
 
 import {HttpClientModule} from '@angular/common/http';
 import { BubbleSortAlgorithmComponent } from './bubble-sort-algorithm/bubble-sort-algorithm.component';
+import { DropdownListComponent } from './dropdown-list/dropdown-list.component';
+import { PropertyBindingComponent } from './property-binding/property-binding.component';
+import { ClassStyleBindingComponent } from './class-style-binding/class-style-binding.component';
+import { EventBindingComponent } from './event-binding/event-binding.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +21,11 @@ import { BubbleSortAlgorithmComponent } from './bubble-sort-algorithm/bubble-sor
     TopoComponent,
     HomeComponent,
     RodapeComponent,
-    BubbleSortAlgorithmComponent
+    BubbleSortAlgorithmComponent,
+    DropdownListComponent,
+    PropertyBindingComponent,
+    ClassStyleBindingComponent,
+    EventBindingComponent
   ],
   imports: [     
         HttpClientModule,
