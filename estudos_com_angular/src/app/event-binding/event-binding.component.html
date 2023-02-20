@@ -1,0 +1,29 @@
+<div>
+        <article>
+               <div>
+                <label>event-binding - escuta os eventos no html da página</label>
+               </div>
+               <div>
+                        <button
+                       (click)="botaoClicado()"
+                        class="btn btn-primary"
+                        >
+                                MeClica
+                        </button>
+               </div>
+               <br>
+               <div>
+                        <input type="text" 
+                        #campoInput
+                        (keyup)="onKeyUp_EscutaEvento($event)"
+                        (keyup.enter)="saveValue(campoInput.value)"
+                        (blur)="saveValue(campoInput.value)"  
+                        >
+                        <!-- <p>valor variavelOuvida : {{ variavelOuvida }}</p> -->
+                        <p>valor variavelValueSalve : {{ variavelValueSalve }}</p>
+               </div>
+               
+        </article>
+</div>
+
+

@@ -12,22 +12,18 @@ import { Oferta } from '../models/oferta.model';
 
 export class HomeComponent {
 
-        public oferta!: Oferta[];  
+public oferta!: Oferta[];  
 
-        constructor( private ofertasService: OfertasService ){}
+constructor( private ofertasService: OfertasService ){}
 
-        ngOnInit(){
-                // TODO - melhoria
-                //this.getMethodObservable();                  
-                //this.resultIsPowerTwo();   
-        }
+ngOnInit(){}
 
-        getMethodObservable(){
-                this.ofertasService.getData()
-                .subscribe(  data => {
-                        this.oferta.push(data)
-                })
-        }
+getMethodObservable(){
+        this.ofertasService.getData()
+        .subscribe(  data => {
+                this.oferta.push(data)
+        })
+}
 
 
 

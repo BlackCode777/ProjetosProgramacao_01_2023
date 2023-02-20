@@ -1,0 +1,21 @@
+<h3>Interpolação | Interpolation!</h3>
+
+<p>string rederizada com Interpolação{{ url }}</p>
+<br>
+<p>resultado de 1 + 1 é: {{ 1 + 1 }}</p>
+<br>
+<p>resultado de 1 + 1 é: {{ getResult() }}</p>
+<br>
+<p>Entendendo funções typescript : _  {{  getResultString(getString) }}</p>
+<br>
+<p>Entendendo funções typescript - boolean : _  {{  getResultBoolean(getBoolean) }}</p>
+<br>
+<article>
+        <h2 id="imagemTest">Property binding of image</h2>
+        <img id="img1"  src="{{ imagem }}">
+        <img id="img1" [src]="imagem"> <!--Assim é mais fácil para leitura de cpodigo-->
+        <img id="img1"  bind-src="imagem"><!-- Isso acontece por baixo dos panos que o angular faz -->
+</article>
+
+<br>
+<br>
