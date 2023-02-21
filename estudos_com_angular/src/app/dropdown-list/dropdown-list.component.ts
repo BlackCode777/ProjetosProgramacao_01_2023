@@ -17,7 +17,7 @@ export class DropdownListComponent {
         ];
 
         // Nesta variavel existe o valor do dropdown escolhido - como acessar esse valor
-        //listDropDown: HTMLSelectElement = new HTMLSelectElement()
+        //Selected: any = new HTMLSelectElement()
         listDropDownInput: any 
         // [object HTMLSelectElement]
         returnValueSelectedInDropdownList(){
