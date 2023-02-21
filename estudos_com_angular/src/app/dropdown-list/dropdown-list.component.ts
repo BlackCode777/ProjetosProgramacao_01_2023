@@ -8,42 +8,39 @@ import { Food } from './IFood.model';
 })
 export class DropdownListComponent {
 
-                //@Input() model;
-                foodsNgModel = []
-                foods: any = [
-                        {id: '', name: 'Selecione'},
-                        {id: '0', name: 'Steak'},
-                        {id: '1', name: 'Pizza'},
-                        {id: '2', name: 'Tacos'},
-                ];
+        foodsNgModel: Array<Food> = []; 
+        foods: any = [
+                {id: '', name: 'Selecione'},
+                {id: '0', name: 'Steak'},
+                {id: '1', name: 'Pizza'},
+                {id: '2', name: 'Tacos'},
+        ];
 
-                // [object HTMLSelectElement]
-
-                funct(){
-                        let valorDoForEach = this.foods.forEach( (valor: { name: string; }) => {
-                                console.log(valor.name)
-                        })
-                        console.log("Aqui")
-                        return valorDoForEach
-                }
-               
-
-        /**
-         * (method) Array<Food>.forEach(callbackfn: (value: Food, index: number, array: Food[]) => void, thisArg?: any): void
-         */
-        
-
-        variavelOuvida: string = ''
-        variavelValueSalve: any ;
-        itemDropDownListen: any = "";
-
-
+        // Nesta variavel existe o valor do dropdown escolhido - como acessar esse valor
+        //listDropDown: HTMLSelectElement = new HTMLSelectElement()
+        listDropDownInput: any 
+        // [object HTMLSelectElement]
+        returnValueSelectedInDropdownList(){
+                this.foods.forEach( (valor: { name: string; }) => {
+                        console.log(valor.name)
+                        this.listDropDownInput = valor.name
+                })
                 
+        }
+      
        constructor( ){}
 
         ngOnInit(){ 
-                this.funct()
+                this.returnValueSelectedInDropdownList()
         }
 
 
 }
+
+/**
+ *          
+        variavelOuvida: string = ''
+        variavelValueSalve: any ;
+        itemDropDownListen: any = "";
+
+ */

@@ -8,7 +8,7 @@
                         <!--  [(ngModel)]="foodsNgModel.name"-->
                         <label>DropDown precisa ser ouvido pelo input</label>
                         <select  #listDropDown >
-                                <option *ngFor="let food of foods" [value]="food.name"> 
+                                <option *ngFor="let food of foods" > 
                                         {{food.name}} 
                                 </option>
                         </select>      
@@ -16,8 +16,7 @@
                 <div  class="col-3">
                         <div><label>Input que escuta os eventos do dropdown</label> </div>
                         <input type="text" style="width: 15rem;"
-                                (ngModel)="listDropDown"
-                        >
+                                [value]="listDropDownInput"  >
                 </div>
         </div>
         
