@@ -2,31 +2,24 @@
 <h2>Testes de Emissão de eventos </h2>
 
 <div class="container">
-
         <div>
-               
-                        <div  class="col-3"  >
-                                <button (click)="saveFoods()">salvar</button>
-                        </div> 
-                        <div  class="col-3"  > 
-                                <!--  [(ngModel)]="foodsNgModel.name"-->
-                                <label>DropDown precisa ser ouvido pelo input</label>
-                                <select  [(ngModel)]="itemSelectedOption"  >
-                                        <option selected disabled>Selecionar...</option>
-                                        <option  *ngFor="let food of foodsFake"   #itemSelectedOption> 
-                                                        {{food.name}} 
-                                        </option>
-                                </select>      
-                        </div>
-                        <div  class="col-3"  >
-                                <input type="text" style="width: 15rem;"  [(ngModel)]="itemSelectedOption" > 
-                        </div>
-                        
-              
-                
-               
+                <div  class="col-3"  >
+                        <button (click)="saveFoods()">salvar</button>
+                </div> 
+                <div  class="col-3"  > 
+                        <!--  [(ngModel)]="foodsNgModel.name"-->
+                        <label>DropDown precisa ser ouvido pelo input</label>
+                        <select  [(ngModel)]="itemSelectedOption"  >
+                                <option selected disabled>Selecionar...</option>
+                                <option  *ngFor="let food of foodsFake"   #itemSelectedOption> 
+                                                {{food.name}} 
+                                </option>
+                        </select>      
+                </div>
+                <div  class="col-3"  >
+                        <input type="text" style="width: 15rem;"  [(ngModel)]="itemSelectedOption" > 
+                </div>   
         </div>
-        
 </div>
 <br>
 <br>

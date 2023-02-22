@@ -16,24 +16,21 @@ export class DropdownListComponent {
                 {id: "1",  name:"Pizzas"},
                 {id: "2",  name:"Abacate"},
                 {id: "3",  name:"Misto"}
-        ]        
-
+        ]        ;
         foods: Food = new Food()
         itemSelectedOption = []
         listDropDownInput: any = ""
-
         onKeyUp_EscutaEvento( evento: KeyboardEvent ){  }
         saveFoods(){}      
        constructor(private dropdownServicesService: DropdownServicesService){ }
         getFoods(){
                 this.dropdownServicesService.getFoods()
                 .subscribe( ( result ) => {
+                        this.foodsFake = result
                         //this.foods = result
-                        this.foods = result
-                        console.log("AQUI >foods<  ",this.itemSelectedOption)
+                        //console.log("AQUI >foods<  ",this.itemSelectedOption)
                 })
         }
-
         ngOnInit(){ 
                 this.getFoods()
          }

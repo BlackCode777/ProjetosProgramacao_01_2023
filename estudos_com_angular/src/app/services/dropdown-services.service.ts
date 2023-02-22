@@ -13,6 +13,7 @@ export class DropdownServicesService {
         http://localhost:3000/food
         http://localhost:3000/pedido
         http://localhost:3000/ofertas
+        estudos_com_angular\src\assets\ofertas\dados\db.json
          */
 
         url = "http://localhost:3000"
