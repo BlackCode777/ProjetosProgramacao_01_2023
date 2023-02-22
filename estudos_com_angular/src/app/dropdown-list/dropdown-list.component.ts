@@ -1,5 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Food } from './IFood.model';
+import { map } from 'rxjs';
+import { FormControl } from '@angular/forms';
+import { DropdownServicesService } from '../services/dropdown-services.service';
+
 
 @Component({
   selector: 'app-dropdown-list',
@@ -8,39 +12,29 @@ import { Food } from './IFood.model';
 })
 export class DropdownListComponent {
 
-        foodsNgModel: Array<Food> = []; 
-        foods: any = [
-                {id: '', name: 'Selecione'},
-                {id: '0', name: 'Steak'},
-                {id: '1', name: 'Pizza'},
-                {id: '2', name: 'Tacos'},
-        ];
+        foodsFake: Food[] = [
+                {id: "1",  name:"Pizzas"},
+                {id: "2",  name:"Abacate"},
+                {id: "3",  name:"Misto"}
+        ]        
 
-        // Nesta variavel existe o valor do dropdown escolhido - como acessar esse valor
-        //Selected: any = new HTMLSelectElement()
-        listDropDownInput: any 
-        // [object HTMLSelectElement]
-        returnValueSelectedInDropdownList(){
-                this.foods.forEach( (valor: { name: string; }) => {
-                        console.log(valor.name)
-                        this.listDropDownInput = valor.name
+        foods: Food = new Food()
+        itemSelectedOption = []
+        listDropDownInput: any = ""
+
+        onKeyUp_EscutaEvento( evento: KeyboardEvent ){  }
+        saveFoods(){}      
+       constructor(private dropdownServicesService: DropdownServicesService){ }
+        getFoods(){
+                this.dropdownServicesService.getFoods()
+                .subscribe( ( result ) => {
+                        //this.foods = result
+                        this.foods = result
+                        console.log("AQUI >foods<  ",this.itemSelectedOption)
                 })
-                
         }
-      
-       constructor( ){}
 
         ngOnInit(){ 
-                this.returnValueSelectedInDropdownList()
-        }
-
-
+                this.getFoods()
+         }
 }
-
-/**
- *          
-        variavelOuvida: string = ''
-        variavelValueSalve: any ;
-        itemDropDownListen: any = "";
-
- */

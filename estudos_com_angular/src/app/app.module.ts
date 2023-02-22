@@ -14,6 +14,7 @@ import { DropdownListComponent } from './dropdown-list/dropdown-list.component';
 import { PropertyBindingComponent } from './property-binding/property-binding.component';
 import { ClassStyleBindingComponent } from './class-style-binding/class-style-binding.component';
 import { EventBindingComponent } from './event-binding/event-binding.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { EventBindingComponent } from './event-binding/event-binding.component';
     EventBindingComponent
   ],
   imports: [     
+        FormsModule,
         HttpClientModule,
         BrowserModule,
         NgbModule

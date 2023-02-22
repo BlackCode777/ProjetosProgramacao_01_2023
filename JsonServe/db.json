@@ -1,4 +1,19 @@
 {
+        "food": [
+                {
+                        "id":0,
+                        "name":"pizza"
+                },
+                {
+                        "id":1,
+                        "name":"hamburguer"
+                },
+                {
+                        "id":2,
+                        "name":"Misto-Quente"
+                }
+
+        ],
         "pedido":[
                 {
                         "id":0,

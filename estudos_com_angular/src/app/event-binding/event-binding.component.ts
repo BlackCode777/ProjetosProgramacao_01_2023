@@ -20,7 +20,7 @@ export class EventBindingComponent {
 
         // Passando o evento para os metodos
         onKeyUp_EscutaEvento( evento: KeyboardEvent ){
-                console.log((<HTMLInputElement>evento.target).value)//Para pega o elemento dentro da html    
+                //console.log((<HTMLInputElement>evento.target).value)//Para pega o elemento dentro da html    
                 this.variavelOuvida =  (<HTMLInputElement>evento.target).value
         }
 

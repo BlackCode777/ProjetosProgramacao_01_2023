@@ -4,20 +4,27 @@
 <div class="container">
 
         <div>
-                <div  class="col-3"  > 
-                        <!--  [(ngModel)]="foodsNgModel.name"-->
-                        <label>DropDown precisa ser ouvido pelo input</label>
-                        <select  #listDropDown >
-                                <option *ngFor="let food of foods" > 
-                                        {{food.name}} 
-                                </option>
-                        </select>      
-                </div>
-                <div  class="col-3">
-                        <div><label>Input que escuta os eventos do dropdown</label> </div>
-                        <input type="text" style="width: 15rem;"
-                                [value]="listDropDownInput"  >
-                </div>
+               
+                        <div  class="col-3"  >
+                                <button (click)="saveFoods()">salvar</button>
+                        </div> 
+                        <div  class="col-3"  > 
+                                <!--  [(ngModel)]="foodsNgModel.name"-->
+                                <label>DropDown precisa ser ouvido pelo input</label>
+                                <select  [(ngModel)]="itemSelectedOption"  >
+                                        <option selected disabled>Selecionar...</option>
+                                        <option  *ngFor="let food of foodsFake"   #itemSelectedOption> 
+                                                        {{food.name}} 
+                                        </option>
+                                </select>      
+                        </div>
+                        <div  class="col-3"  >
+                                <input type="text" style="width: 15rem;"  [(ngModel)]="itemSelectedOption" > 
+                        </div>
+                        
+              
+                
+               
         </div>
         
 </div>

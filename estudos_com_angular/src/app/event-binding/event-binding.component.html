@@ -15,8 +15,11 @@
                         (keyup)="onKeyUp_EscutaEvento($event)"
                         (keyup.enter)="saveValue(campoInput.value)"  
                         >
+
+                        <input type="text"  [value]="variavelOuvida"> 
+
                         <!-- 
-                                <p>valor variavelOuvida : {{ variavelOuvida }}</p> 
+                                
                                 <p>valor variavelValueSalve : {{ variavelValueSalve }}</p>
                         -->
                </div>
