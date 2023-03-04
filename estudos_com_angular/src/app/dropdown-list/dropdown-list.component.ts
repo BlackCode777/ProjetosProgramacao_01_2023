@@ -20,9 +20,11 @@ export class DropdownListComponent {
         foods: Food = new Food()
         itemSelectedOption = []
         listDropDownInput: any = ""
+
         onKeyUp_EscutaEvento( evento: KeyboardEvent ){  }
-        saveFoods(){}      
+       
        constructor(private dropdownServicesService: DropdownServicesService){ }
+
         getFoods(){
                 this.dropdownServicesService.getFoods()
                 .subscribe( ( result ) => {
@@ -34,4 +36,6 @@ export class DropdownListComponent {
         ngOnInit(){ 
                 this.getFoods()
          }
+
+         saveFoods(){}
 }
