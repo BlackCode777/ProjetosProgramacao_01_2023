@@ -1,12 +1,12 @@
-package com.DesignAPIsRestFull_SpringTddJunit2.SpringTddJunit;
+package com.designAPIsRestFullSpringTddJunit3.libraryApi;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class DesignApIsRestFullSpringTddJunit2ApplicationTests {
+class LibraryApiApplicationTests {
 
-	@Test
+	@Test // Verifica se a aplicação está subindo
 	void contextLoads() {
 	}
 
