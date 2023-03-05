@@ -1,14 +1,20 @@
 package com.designAPIsRestFullSpringTddJunit3.libraryApi.resource;
 
 import com.designAPIsRestFullSpringTddJunit3.libraryApi.dto.BooKDTO;
+import com.designAPIsRestFullSpringTddJunit3.libraryApi.model.entity.Book;
+import com.designAPIsRestFullSpringTddJunit3.libraryApi.service.BookService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.BDDMockito;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -31,6 +37,9 @@ public class BookControllerTest {
     @Autowired
     MockMvc mvc;
 
+    @MockBean
+    BookService service;
+
     @Test
     @DisplayName("Deve criar um livro com sucesso!")
     public void  createBookTest() throws Exception{
@@ -41,6 +50,12 @@ public class BookControllerTest {
         // junto com a função .build()
         // Agora passa o bookDTO para linha 49 e linha  64 - 66, para pegar os valores dinâmicamente populando os campos
         BooKDTO bookDTO = BooKDTO.builder().title("As aventuras").author("Arthur").isbn("001").build();
+
+        // Simulando comportamento de salvar do metodo da classe Service
+        Book savedBook = Book.builder().id(13L).title("As aventuras").author("Arthur").isbn("001").build();
+
+        // Simula Comportamento de salvar no banco um objeto Book populado *
+        BDDMockito.given(service.save( Mockito.any(Book.class))).willReturn(savedBook);
 
         // teste passo - 1
         //Criar uma string para representar o json - linha 39
