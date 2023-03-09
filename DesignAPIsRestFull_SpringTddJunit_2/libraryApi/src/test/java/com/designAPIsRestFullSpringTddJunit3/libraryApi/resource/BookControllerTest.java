@@ -37,7 +37,7 @@ public class BookControllerTest {
     @Autowired
     MockMvc mvc;
 
-    @MockBean
+    @MockBean//cria uma instancia mockada para injetar
     BookService service;
 
     @Test

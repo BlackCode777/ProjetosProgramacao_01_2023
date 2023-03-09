@@ -10,4 +10,13 @@ public class SrMotorApplication {
 		SpringApplication.run(SrMotorApplication.class, args);
 	}
 
+        // while( loveCode >= isTrue()){
+        //         for( WakeUp == isTrue() ){
+        //                 .thinking();
+        //                 .coding();
+        //                 .eat();
+        //                 .runningCode();		
+        //         }
+	// }
+
 }
