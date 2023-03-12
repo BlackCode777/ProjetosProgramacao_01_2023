@@ -15,6 +15,7 @@ import { PropertyBindingComponent } from './property-binding/property-binding.co
 import { ClassStyleBindingComponent } from './class-style-binding/class-style-binding.component';
 import { EventBindingComponent } from './event-binding/event-binding.component';
 import { FormsModule } from '@angular/forms';
+import { OfertaComponent } from './oferta/oferta.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { FormsModule } from '@angular/forms';
     DropdownListComponent,
     PropertyBindingComponent,
     ClassStyleBindingComponent,
-    EventBindingComponent
+    EventBindingComponent,
+    OfertaComponent
   ],
   imports: [     
         FormsModule,

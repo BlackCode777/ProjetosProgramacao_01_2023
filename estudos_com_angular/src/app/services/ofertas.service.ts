@@ -1,8 +1,10 @@
 import { ErrorHandler, Injectable } from '@angular/core';
 import { Oferta } from '../models/oferta.model';
 
-//import 'rxjs/operators/promise'  //rxjs/operators/toPromise
-import { HttpClient } from '@angular/common/http';
+import 'rxjs/add/operator/retry' 
+import 'rxjs/add/operator/map' 
+import 'rxjs/operator/promise'  //rxjs/operators/toPromise
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable, catchError, map, retry } from 'rxjs';
 
 @Injectable()
@@ -14,9 +16,35 @@ export class OfertasService {
 
   constructor( public http: HttpClient ) { }
 
-  getData(): Observable<Oferta>{
+  /*public getOfertas(): Promise<Oferta[]> {   EXEMPLO
+        //efetuar uma requisição http
+        return this.http.get(`${URL_API}/ofertas?destaque=true`)
+            .toPromise()
+            .then((resposta: any) => resposta.json())
+        //retornar uma promise Oferta
+    }*/
+  getOferta(): Promise<Oferta[]> {
         return this.http.get<Oferta>(this.baseUrl)
+                .toPromise()
+                .then((resposta: HttpResponse) => resposta.json())
   }
+
+  /*public getOfertaPorId(id: number): Promise<Oferta> {
+        return this.http.get(`${URL_API}/ofertas?id=${id}`)
+            .toPromise()
+            .then((resposta: any) => resposta.json()[0])
+    }*/
+    public getOfertaPorId(id: number): Promise<Oferta> {
+        return this.http.get<Oferta>(`${this.baseUrl}/ofertas?id=${id}`)
+                .toPromise()
+                .then((resposta: any) => resposta.json())
+    }
+
+    public pesquisaDeOfertas( termo: string): Observable<Oferta> {
+        return this.http.get<Oferta>( `${this.baseUrl}/ofertas?descricao_oferta_like=${termo}` )
+        //.retry(10)
+        .pipe((resposta: any)  => resposta.json())//.map( (resposta: any)  => resposta.json())
+    }
 
 }
 

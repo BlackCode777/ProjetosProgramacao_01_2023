@@ -6,8 +6,8 @@ import { Oferta } from '../models/oferta.model';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css'],
-  providers:[OfertasService]
+  styleUrls: ['./home.component.css']
+  //providers:[OfertasService]
 })
 
 export class HomeComponent {
@@ -16,12 +16,14 @@ public oferta!: Oferta[];
 
 constructor( private ofertasService: OfertasService ){}
 
-ngOnInit(){}
+ngOnInit(){
+        this.getMethodObservable()
+}
 
 getMethodObservable(){
-        this.ofertasService.getData()
-        .subscribe(  data => {
-                this.oferta.push(data)
+        this.ofertasService.getOferta()
+        .then(  data => {
+                this.oferta = data
         })
 }
 

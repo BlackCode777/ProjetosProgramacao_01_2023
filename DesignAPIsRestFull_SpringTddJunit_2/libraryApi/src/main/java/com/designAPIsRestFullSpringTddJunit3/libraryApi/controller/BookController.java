@@ -3,6 +3,7 @@ package com.designAPIsRestFullSpringTddJunit3.libraryApi.controller;
 import com.designAPIsRestFullSpringTddJunit3.libraryApi.dto.BooKDTO;
 import com.designAPIsRestFullSpringTddJunit3.libraryApi.model.entity.Book;
 import com.designAPIsRestFullSpringTddJunit3.libraryApi.service.BookService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -26,9 +27,11 @@ public class BookController {
     // Instancia a Interface o service *
     @Autowired
     private BookService service;
-    // public BookController( BookService service){
-    //     this.service = service;
-    //}
+    private ModelMapper modelMapper;
+     public BookController( BookService service, ModelMapper mapper){
+         this.service = service;
+         this.modelMapper = mapper;
+    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -37,21 +40,11 @@ public class BookController {
         // TODO - precisa melhorar
 
         // Passa a instancia de Book para a instancia de BookService * 
-        Book entity = Book.builder()
-                .author(bookdto.getAuthor())
-                .title(bookdto.getTitle())
-                .isbn(bookdto.getIsbn())
-                .build();
-        // salva uma entidade no banco *
+        Book entity = modelMapper.map(bookdto, Book.class);
         entity = service.save(entity);
 
         // e retorna um DTO como boa prática *
-        return BooKDTO.builder()
-                .id(entity.getId())
-                .author(entity.getAuthor())
-                .title(entity.getTitle())
-                .isbn(entity.getIsbn())
-                .build();
+        return modelMapper.map( entity, BooKDTO.class);
     }
 
 }
