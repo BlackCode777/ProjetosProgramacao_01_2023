@@ -4,6 +4,7 @@ import com.designAPIsRestFullSpringTddJunit3.libraryApi.dto.BooKDTO;
 import com.designAPIsRestFullSpringTddJunit3.libraryApi.model.entity.Book;
 import com.designAPIsRestFullSpringTddJunit3.libraryApi.service.BookService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,6 +25,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static com.designAPIsRestFullSpringTddJunit3.libraryApi.dto.BooKDTO.*;
+import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -83,9 +85,21 @@ public class BookControllerTest {
 
     @Test
     @DisplayName("Deve lançar um erro de validação quando não houver dados suficientes para criação de livro!")
-    public void  createInvalidBookTest(){
+    public void  createInvalidBookTest() throws Exception{
+
+        String json = new ObjectMapper().writeValueAsString(new BooKDTO());//Para validar a existencia de dados precisamos do json dos objetos
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post(Book_Api) //Pega as requisições para fazer a validação dos objetos - ate aqui objetos está vazio -nesse teste eu espero que de um erro pq o objeto esta vazio
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(json);
+
+        mvc.perform( request ) // Aqui estou configurando uma mensagem de erro para cada campo do objeto Book ( title,author,isbn )
+                .andExpect( status().isBadRequest() )
+                .andExpect( jsonPath( "errors", hasSize( 3 ) ));
 
     }
+
 
 
 }
