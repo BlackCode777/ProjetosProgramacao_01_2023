@@ -43,7 +43,6 @@ public class BookServiceTest { // Teste usado para fazer somente testr unitário
                     .title("As aventuras")
                     .build()
         );
-
         //Execução do teste
         Book savedBook = service.save(book);
         //Verificação se o método esta salvando // enquanto o metodo estiver null - BookServiceImple()

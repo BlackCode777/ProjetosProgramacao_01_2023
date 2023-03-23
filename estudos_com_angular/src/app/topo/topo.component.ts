@@ -19,8 +19,7 @@ export class TopoComponent {
         ngOnInit(){}
 
         pesquisa( termoDaPesquisa: string ): void{
-                //console.log( "AQUI >>> ",(<HTMLInputElement>event.target).value )
-                //console.log( "AQUI >>> ",termoDaPesquisa )
+                
                 this.ofertas = this.ofertasService.pesquisaDeOfertas(termoDaPesquisa)
 
                 this.ofertas.subscribe(

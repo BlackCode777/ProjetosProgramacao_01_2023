@@ -1,6 +1,7 @@
 package com.designAPIsRestFullSpringTddJunit3.libraryApi.controller;
 
 import com.designAPIsRestFullSpringTddJunit3.libraryApi.api.exception.ApiErrors;
+import com.designAPIsRestFullSpringTddJunit3.libraryApi.api.exception.BusinessException;
 import com.designAPIsRestFullSpringTddJunit3.libraryApi.dto.BooKDTO;
 import com.designAPIsRestFullSpringTddJunit3.libraryApi.model.entity.Book;
 import com.designAPIsRestFullSpringTddJunit3.libraryApi.service.BookService;
@@ -54,6 +55,12 @@ public class BookController {
     public ApiErrors handleValidationExceptions( MethodArgumentNotValidException ex ){
         BindingResult bindingResult = ex.getBindingResult(); // criando a instancia de BindingResult para pegar todos os erros da requisição
         return new ApiErrors( bindingResult );// criando os objetos que vão pegar os erros e vão mandar para a API
+    }
+
+    @ExceptionHandler( BusinessException.class )
+    @ResponseStatus( HttpStatus.BAD_REQUEST )
+    public ApiErrors handleBusinessException( BusinessException ex ){
+         return new ApiErrors( ex );
     }
 
 }

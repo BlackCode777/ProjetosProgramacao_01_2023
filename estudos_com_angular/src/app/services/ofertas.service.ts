@@ -12,28 +12,31 @@ export class OfertasService {
       
   public baseUrl: string = "http://localhost:3000/ofertas"
 
-  //public ofertas!: Oferta[]
-
   constructor( public http: HttpClient ) { }
 
-  /*public getOfertas(): Promise<Oferta[]> {   EXEMPLO
+  /*
+  public getOfertas(): Promise<Oferta[]> {   EXEMPLO
         //efetuar uma requisição http
         return this.http.get(`${URL_API}/ofertas?destaque=true`)
             .toPromise()
             .then((resposta: any) => resposta.json())
         //retornar uma promise Oferta
-    }*/
+    }
+*/
   getOferta(): Promise<Oferta[]> {
         return this.http.get<Oferta>(this.baseUrl)
                 .toPromise()
                 .then((resposta: HttpResponse) => resposta.json())
   }
 
-  /*public getOfertaPorId(id: number): Promise<Oferta> {
+  /*
+  public getOfertaPorId(id: number): Promise<Oferta> {
         return this.http.get(`${URL_API}/ofertas?id=${id}`)
             .toPromise()
             .then((resposta: any) => resposta.json()[0])
-    }*/
+  }
+    
+    */
     public getOfertaPorId(id: number): Promise<Oferta> {
         return this.http.get<Oferta>(`${this.baseUrl}/ofertas?id=${id}`)
                 .toPromise()
