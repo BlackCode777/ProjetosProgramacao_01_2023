@@ -10,6 +10,4 @@ public class ConceitosJavaApplication {
 		SpringApplication.run(ConceitosJavaApplication.class, args);
 	}
 
-
-
 }

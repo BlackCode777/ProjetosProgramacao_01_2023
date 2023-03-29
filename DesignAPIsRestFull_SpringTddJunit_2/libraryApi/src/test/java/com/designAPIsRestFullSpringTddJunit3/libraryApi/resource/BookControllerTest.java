@@ -38,28 +38,30 @@ public class BookControllerTest {
     @MockBean//cria uma instancia mockada para injetar
     BookService service;
 
+    // teste passo - 0
+    // Chama classe BooKDTO com o .builder()
+    // depois chama os campos da classe BooKDTO ( .title("As aventuras") .author("Arthur").isbn("001")  )
+    // junto com a função .build()
+    // Agora passa o bookDTO para linha 49 e linha  64 - 66, para pegar os valores dinâmicamente populando os campos
+    // Simulando comportamento de salvar do metodo da classe Service linha 57
+    // Simula Comportamento de salvar no banco um objeto Book populado - linha 60
+    // teste passo - 1
+    //Criar uma string para representar o json - linha 39
+    //Transformar objetos em json - linha 40 - 43
+    // teste passo - 2
+    // .andExpect(MockMvcResultMatchers.status().isCreated()) - quando envio uma requisição eu espero que seja criado um registro no banco - linha 54,55
+    // .andExpect( MockMvcResultMatchers.jsonPath("id") - espera o retorno de json do ' id ' não vazio  - linha 56
+    // .isEmpty() - verifica se esta vazio - linha 56
+    // .andExpect() -  espera o retorno de json do ' title '  - linha 57
+
     @Test
     @DisplayName("Deve criar um livro com sucesso!")
     public void  createBookTest() throws Exception{
 
-        // teste passo - 0
-        // Chama classe BooKDTO com o .builder()
-        // depois chama os campos da classe BooKDTO ( .title("As aventuras") .author("Arthur").isbn("001")  )
-        // junto com a função .build()
-        // Agora passa o bookDTO para linha 49 e linha  64 - 66, para pegar os valores dinâmicamente populando os campos
-        // Simulando comportamento de salvar do metodo da classe Service linha 57
-        // Simula Comportamento de salvar no banco um objeto Book populado - linha 60
-        // teste passo - 1
-        //Criar uma string para representar o json - linha 39
-        //Transformar objetos em json - linha 40 - 43
-        // teste passo - 2
-        // .andExpect(MockMvcResultMatchers.status().isCreated()) - quando envio uma requisição eu espero que seja criado um registro no banco - linha 54,55
-        // .andExpect( MockMvcResultMatchers.jsonPath("id") - espera o retorno de json do ' id ' não vazio  - linha 56
-        // .isEmpty() - verifica se esta vazio - linha 56
-        // .andExpect() -  espera o retorno de json do ' title '  - linha 57
-
         BooKDTO bookDTO = createNewBook();
+
         Book savedBook = Book.builder().id(13L).title("As aventuras").author("Arthur").isbn("001").build();
+
         BDDMockito.given(service.save( Mockito.any(Book.class))).willReturn(savedBook);
 
         String json = new ObjectMapper().writeValueAsString(bookDTO);
@@ -100,15 +102,13 @@ public class BookControllerTest {
     public void createBookWithDuplicatedIsbn() throws Exception {
 
         BooKDTO dto = createNewBook();
-
         String json = new ObjectMapper().writeValueAsString(dto);//Para validar a existencia de dados precisamos do json dos objetos
-
         String mensagemErro = "Isbn já cadastrado.";
-
         BDDMockito.given( service.save( Mockito.any( Book.class ) ) ) // enviando uma mensagem de erro ao salvar um isbn repetido - simulação
                 .willThrow( new BusinessException(mensagemErro) ); //BusinessException() - significa erro da regra de negocio
 
-        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post(Book_Api) //Pega as requisições para fazer a validação dos objetos - ate aqui objetos está vazio -nesse teste eu espero que de um erro pq o objeto esta vazio
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .post(Book_Api) //Pega as requisições para fazer a validação dos objetos - ate aqui objetos está vazio -nesse teste eu espero que de um erro pq o objeto esta vazio
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(json);
