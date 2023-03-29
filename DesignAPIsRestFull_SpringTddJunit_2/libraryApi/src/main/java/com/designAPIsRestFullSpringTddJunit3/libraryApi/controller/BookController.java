@@ -42,7 +42,7 @@ public class BookController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public BooKDTO create(@RequestBody @Validated BooKDTO bookdto){ // Essa variável (bookdto) traz os dados do RequestBody - so que falta o ID populado - porisso da esso no teste
+    public BooKDTO create(@RequestBody @Valid BooKDTO bookdto){ // Essa variável (bookdto) traz os dados do RequestBody - so que falta o ID populado - porisso da esso no teste
         // Passa a instancia de Book para a instancia de BookService *
         Book entity = modelMapper.map(bookdto, Book.class);
         entity = service.save(entity);
