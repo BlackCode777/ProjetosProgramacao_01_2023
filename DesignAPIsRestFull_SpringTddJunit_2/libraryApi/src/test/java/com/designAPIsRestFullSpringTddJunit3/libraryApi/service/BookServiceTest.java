@@ -41,7 +41,7 @@ public class BookServiceTest { // Teste usado para fazer somente testr unitário
     @DisplayName("Deve salvar um livro")
     public  void saveBookTest(){
         Book book = createValidBook(); //Cenário de teste >>> ERRO AQUI >>> Book book = Book.builder().isbn("123").author("Fulano").title("As aventuras").build(); = solução criar o metodo
-        Mockito.when( repository.existsByIsbnTrue( Mockito.anyString() ) ).thenReturn( false );
+        Mockito.when( repository.existsByIsbn( Mockito.anyString() ) ).thenReturn( false );
         Mockito.when( repository.save( book ) ).thenReturn( // O teste aqui passa, pq criamos um livro mockado fake
                 Book.builder()
                     .id(1L)
@@ -65,7 +65,7 @@ public class BookServiceTest { // Teste usado para fazer somente testr unitário
         //cenario
         Book book = createValidBook();
 
-        Mockito.when( repository.existsByIsbnTrue( Mockito.anyString() ) ).thenReturn( true );
+        Mockito.when( repository.existsByIsbn( Mockito.anyString() ) ).thenReturn( true );
 
         //execução
         final  Throwable exception = catchThrowable( () -> service.save(book) ); // REF -> https://www.tabnine.com/code/java/methods/org.assertj.core.api.Assertions/catchThrowable

@@ -18,7 +18,7 @@ public class BookServiceImple implements BookService {
     @Override
     public Book save(Book book) {
 
-        if( repository.existsByIsbnTrue(book.getIsbn() ) ){
+        if( repository.existsByIsbn(book.getIsbn() ) ){
             throw new BusinessException("Isbn já cadastrado.");
         }
         return repository.save(book);
