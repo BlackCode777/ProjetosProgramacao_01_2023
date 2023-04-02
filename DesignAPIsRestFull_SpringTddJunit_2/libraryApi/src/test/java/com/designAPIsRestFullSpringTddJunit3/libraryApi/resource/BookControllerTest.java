@@ -7,6 +7,7 @@ import com.designAPIsRestFullSpringTddJunit3.libraryApi.service.BookService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestTemplate;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.BDDMockito;
 import org.mockito.Mockito;
@@ -118,7 +119,6 @@ public class BookControllerTest {
                 .andExpect(jsonPath( "errors[0]").value(mensagemErro) );
     }
 
-
     @Test
     @DisplayName("Deve obter informações de um livro.")
     public void getBookDetailsTest() throws Exception {
@@ -147,11 +147,10 @@ public class BookControllerTest {
                 .andExpect( jsonPath( "isbn").value(createNewBook().getIsbn()));
     }
 
-
     @Test
     @DisplayName("Deve retornar ' resource not found ' quando o livro procurado não existir.")
     public void bookNotFoundTest() throws Exception {
-
+        //Cenário
         BDDMockito.given(service.getById( Mockito.anyLong() )).willReturn(Optional.empty());
 
         //execução (when)
@@ -160,6 +159,63 @@ public class BookControllerTest {
         mvc.perform(request).andExpect(status().isNotFound());
     }
 
+    //Teste de deleção de Books
+    @Test
+    @DisplayName( "Deve deletar um book " )
+    public void deleteBookTest() throws Exception {
+        //Cenário
+        BDDMockito.given(service.getById( Mockito.anyLong() )).willReturn(Optional.of( Book.builder().id(1L).build() ) );
+
+        //execução (when)
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.delete(Book_Api.concat("/" + 1));
+
+        mvc.perform(request)
+                .andExpect( status().isNoContent() );
+    }
+
+    //Teste de atualização de Books
+    @Test
+    @DisplayName(" Deve atualizar um Book ")
+    public void updateBookTest() throws Exception {
+        //Cenário
+        Long id = 1L;
+        String json = new ObjectMapper().writeValueAsString(createNewBook());
+
+        // Livro que eu quero atualizar na base
+        Book updatingBook = Book.builder().id(1L).title("some title").author("some author").isbn("321").build();
+        BDDMockito.given( service.getById( id ) ).willReturn(Optional.of( updatingBook ) );
+
+        // Livro que já está cadastrado na base
+        Book updatedBook = Book.builder().id(id).title("As aventuras").author("Arthur").isbn("321").build();
+        BDDMockito.given( service.update( updatingBook ) ).willReturn( updatedBook );
+
+        //execução (when)
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .put(Book_Api.concat("/" + 1)).content(json).accept(MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON);
+
+        //Aqui ele obtem as informações do livro cadastrado na base
+        mvc.perform( request )
+                .andExpect( status().isOk() )
+                .andExpect( jsonPath("id").value(id))
+                .andExpect( jsonPath( "title").value(createNewBook().getTitle()))
+                .andExpect( jsonPath( "author").value(createNewBook().getAuthor()))
+                .andExpect( jsonPath( "isbn").value( "321" ));
+    }
+
+    //Testa
+    @Test
+    @DisplayName(" Deve retornar status 404 ao tentar atualizar um Book inexistente ")
+    public void updateBookInexistenteTest_404() throws Exception {
+        //Cenário
+        String json = new ObjectMapper().writeValueAsString( createNewBook() );
+
+        BDDMockito.given( service.getById( Mockito.anyLong() ) ).willReturn(Optional.empty() );
+        //execução (when)
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .put(Book_Api.concat("/" + 1) ).content(json).accept(MediaType.APPLICATION_JSON).contentType(MediaType.APPLICATION_JSON);
+
+        mvc.perform( request ).andExpect( status().isNotFound() );
+    }
 
     private static BooKDTO createNewBook() {
         return BooKDTO.builder().title("As aventuras").author("Arthur").isbn("001").build();
