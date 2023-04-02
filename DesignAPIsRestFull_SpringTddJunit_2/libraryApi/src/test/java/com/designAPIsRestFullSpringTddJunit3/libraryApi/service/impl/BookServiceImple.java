@@ -6,6 +6,8 @@ import com.designAPIsRestFullSpringTddJunit3.libraryApi.repository.BookRepositor
 import com.designAPIsRestFullSpringTddJunit3.libraryApi.service.BookService;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class BookServiceImple implements BookService {
 
@@ -22,6 +24,11 @@ public class BookServiceImple implements BookService {
             throw new BusinessException("Isbn já cadastrado.");
         }
         return repository.save(book);
+    }
+
+    @Override
+    public Optional<Book> getById(Long id) {
+        return Optional.empty();
     }
 
 }

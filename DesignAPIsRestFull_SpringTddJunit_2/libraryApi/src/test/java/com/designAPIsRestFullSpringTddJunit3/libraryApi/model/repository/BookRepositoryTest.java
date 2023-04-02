@@ -52,6 +52,7 @@ public class BookRepositoryTest {
         boolean exists = Boolean.parseBoolean(String.valueOf(repository.existsByIsbn(isbn)));
         //Verification
         assertThat(exists).isFalse();
+
     }
 
 
