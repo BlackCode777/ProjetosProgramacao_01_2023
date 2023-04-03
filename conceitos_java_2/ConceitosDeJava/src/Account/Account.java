@@ -4,10 +4,14 @@ public class Account {
 
     private String theName;
 
-    public boolean getname() {
+    public Account() { }
+
+    public boolean getName() {
+        return this.getName();
     }
 
-    public boolean setName(String theName) {
+    public void setName(String theName) {
         this.theName = theName;
     }
+
 }

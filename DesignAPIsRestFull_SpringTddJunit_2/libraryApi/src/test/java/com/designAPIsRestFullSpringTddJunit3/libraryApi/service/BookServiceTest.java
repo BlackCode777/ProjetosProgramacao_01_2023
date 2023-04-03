@@ -13,6 +13,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
@@ -75,7 +77,40 @@ public class BookServiceTest { // Teste usado para fazer somente testr unitário
         Mockito.verify( repository, Mockito.never() ).save(book);
     }
 
+    @Test
+    @DisplayName("Deve obter um livro por id")
+    public void getBookForIDTest() throws  Exception {
+        // Cenário
+        Long id = 1L;
+        Book book = createValidBook();
+        book.setId(id);
+        Mockito.when(repository.findById(id)).thenReturn(Optional.of(book));
 
+        //Execução
+        Optional<Book> foundBook = service.getById(id);
+
+        //Verificação
+        assertThat( foundBook.isPresent() ).isTrue();
+        assertThat( foundBook.get().getId() ).isEqualTo( id );
+        assertThat( foundBook.get().getAuthor() ).isEqualTo( book.getAuthor() );
+        assertThat( foundBook.get().getIsbn() ).isEqualTo( book.getIsbn() );
+        assertThat( foundBook.get().getTitle() ).isEqualTo( book.getTitle() );
+    }
+
+    @Test
+    @DisplayName("Deve retornar vazio ao tentar obter um livro por id quando ele não existir")
+    public void bookNotFoundById_RetornarFalseTest() throws  Exception {
+        // Cenário
+        Long id = 1L;
+
+        Mockito.when(repository.findById(id)).thenReturn(Optional.empty());
+
+        //Execução
+        Optional<Book> book = service.getById(id);
+
+        //Verificação
+        assertThat( book.isPresent() ).isFalse();
+    }
 
 
 }
