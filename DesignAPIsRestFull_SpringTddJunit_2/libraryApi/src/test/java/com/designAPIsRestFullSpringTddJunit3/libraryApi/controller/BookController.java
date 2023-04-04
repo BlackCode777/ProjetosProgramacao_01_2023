@@ -7,6 +7,9 @@ import com.designAPIsRestFullSpringTddJunit3.libraryApi.model.entity.Book;
 import com.designAPIsRestFullSpringTddJunit3.libraryApi.service.BookService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -14,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/books")
@@ -91,6 +96,19 @@ public class BookController {
     public void delete( @PathVariable Long id ){
         Book book = service.getById(  id  ).get();
         service.delete(book);
+    }
+
+    @GetMapping
+    public Page<BooKDTO> find(BooKDTO dto, Pageable pageRequest){
+        Book filter = modelMapper.map( dto, Book.class );
+        Page<Book> result = service.find( filter, pageRequest );
+        List<BooKDTO> list = result.getContent()
+                .stream()
+                .map( entity -> modelMapper.map( entity, BooKDTO.class ) )
+                .collect( Collectors.toList() ); // retorna uma list de string de dto
+
+        return new PageImpl<BooKDTO>( list, pageRequest, result.getTotalElements() );
+
     }
 
 }

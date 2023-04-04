@@ -74,6 +74,28 @@ public class BookRepositoryTest {
         assertThat(foundBook.isPresent()).isTrue();
     }
 
+    //Teste de integração para save
+    @Test
+    @DisplayName("Deve salvar um Book.")
+    public void saveBookIntegrationTest(){
+        Book book = createNewBook("123");
+        Book savedBook = repository.save( book );
+        assertThat( savedBook.getId() ).isNotNull();
+    }
 
+    //Teste de integração para método deletarBook()
+    @Test
+    @DisplayName("Deve deletar um Book.")
+    public void deleteBookIntegrationTest(){
+        // Pego o livro
+        Book book = createNewBook("123");
+        //Persisto o livro na base
+        entityManager.persist(book);
+        Book foundBook = entityManager.find( Book.class, book.getId() );
+        // Deleta o Book na base
+        repository.delete(foundBook);
+        Book deletedBook = entityManager.find( Book.class, book.getId() );
+        assertThat( deletedBook ).isNull();
+    }
 
 }
