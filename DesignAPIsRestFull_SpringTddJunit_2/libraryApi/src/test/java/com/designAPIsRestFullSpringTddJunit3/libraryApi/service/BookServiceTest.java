@@ -4,6 +4,7 @@ import com.designAPIsRestFullSpringTddJunit3.libraryApi.api.exception.BusinessEx
 import com.designAPIsRestFullSpringTddJunit3.libraryApi.model.entity.Book;
 import com.designAPIsRestFullSpringTddJunit3.libraryApi.repository.BookRepository;
 import com.designAPIsRestFullSpringTddJunit3.libraryApi.service.impl.BookServiceImple;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,6 +28,7 @@ public class BookServiceTest { // Teste usado para fazer somente testr unitário
 
     @MockBean
     BookRepository repository;
+    private long id;
 
     @BeforeEach
     public void setUp(){
@@ -85,10 +87,8 @@ public class BookServiceTest { // Teste usado para fazer somente testr unitário
         Book book = createValidBook();
         book.setId(id);
         Mockito.when(repository.findById(id)).thenReturn(Optional.of(book));
-
         //Execução
         Optional<Book> foundBook = service.getById(id);
-
         //Verificação
         assertThat( foundBook.isPresent() ).isTrue();
         assertThat( foundBook.get().getId() ).isEqualTo( id );
@@ -102,15 +102,63 @@ public class BookServiceTest { // Teste usado para fazer somente testr unitário
     public void bookNotFoundById_RetornarFalseTest() throws  Exception {
         // Cenário
         Long id = 1L;
-
         Mockito.when(repository.findById(id)).thenReturn(Optional.empty());
-
         //Execução
         Optional<Book> book = service.getById(id);
-
         //Verificação
         assertThat( book.isPresent() ).isFalse();
     }
 
+    // Testes para deletar um Book do registro
+    @Test
+    @DisplayName(" Deve deletar um Book, se tiver um id válido. ")
+    public void deleteBookTest(){
+        // Cenário
+        Book book = Book.builder().id(1L).build(); // preciso de um livro para deletar
+        // Execução - usando assertion do Junit
+        Assertions.assertDoesNotThrow( () -> service.delete(book) );
+        // Aqui eu faço o Mockito verificar se o método delete() é chamado pelo menos na classe BookServiceImple.java
+        Mockito.verify(repository, Mockito.times(1 )).delete(book);
+    }
+
+    @Test
+    @DisplayName( " Deve ocorrer um erro  ao tentar deletar um Book inexistente. " )
+    public void deleteInvalidBookTest(){
+        Book book = new Book();
+        org.junit.jupiter.api.Assertions.assertThrows(IllegalArgumentException.class, () -> service.delete(book));
+        Mockito.verify( repository, Mockito.never( ) ).delete(book);
+    }
+
+    // Testes para atualizar um Book do registro
+    @Test
+    @DisplayName( " Deve ocorrer um erro  ao tentar atualizar um Book inexistente. " )
+    public void updateInvalidBookTest(){
+        Book book = new Book();
+        org.junit.jupiter.api.Assertions.assertThrows(IllegalArgumentException.class, () -> service.update(book));
+        Mockito.verify( repository, Mockito.never( ) ).save(book);
+    }
+
+    // Testes para atualizar um Book do registro
+    @Test
+    @DisplayName( " Deve ocorrer um erro  ao tentar atualizar um Book inexistente. " )
+    public void updateBookTest(){
+        // Cenário
+        Long id = 1L;
+        // Livro atualizado
+        Book updatingBook = Book.builder().id(id).build();
+
+        Book updatedBook = createValidBook();
+        updatedBook.setId(id);
+        Mockito.when( repository.save( updatingBook ) ).thenReturn( updatedBook );
+
+        // Execução
+        Book book = service.update( updatingBook );
+
+        // Verificação
+        assertThat( book.getId() ).isEqualTo( updatedBook.getId() );
+        assertThat( book.getTitle() ).isEqualTo( updatedBook.getTitle() );
+        assertThat( book.getAuthor() ).isEqualTo( updatedBook.getAuthor() );
+        assertThat( book.getIsbn() ).isEqualTo( updatedBook.getIsbn() );
+    }
 
 }

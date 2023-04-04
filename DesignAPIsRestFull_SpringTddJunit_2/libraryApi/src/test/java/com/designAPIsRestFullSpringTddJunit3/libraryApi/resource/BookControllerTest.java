@@ -77,8 +77,8 @@ public class BookControllerTest {
                 .andExpect( jsonPath("id").isNotEmpty())
                 .andExpect( jsonPath( "title").value(bookDTO.getTitle()))
                 .andExpect( jsonPath( "author").value(bookDTO.getAuthor()))
-                .andExpect( jsonPath( "isbn").value(bookDTO.getIsbn()))
-        ;   }
+                .andExpect( jsonPath( "isbn").value(bookDTO.getIsbn()));
+    }
 
     @Test
     @DisplayName("Deve lançar um erro de validação quando não houver dados suficientes para criação de livro!")
@@ -138,8 +138,8 @@ public class BookControllerTest {
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
                 .get(Book_Api.concat("/" + id))
                 .accept(MediaType.APPLICATION_JSON);
-        mvc
-                .perform(request)
+
+        mvc.perform(request)
                 .andExpect(status().isOk())
                 .andExpect( jsonPath("id").value(id))
                 .andExpect( jsonPath( "title").value(createNewBook().getTitle()))
@@ -151,12 +151,13 @@ public class BookControllerTest {
     @DisplayName("Deve retornar ' resource not found ' quando o livro procurado não existir.")
     public void bookNotFoundTest() throws Exception {
         //Cenário
-        BDDMockito.given(service.getById( Mockito.anyLong() )).willReturn(Optional.empty());
+        BDDMockito.given(service.getById( Mockito.anyLong() )).willReturn(Optional.empty()); // Verifica se o objeto está vazio
 
         //execução (when)
-        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders // Monta a requisição e envia para o banco
                 .get(Book_Api.concat("/" + 1)).accept(MediaType.APPLICATION_JSON);
-        mvc.perform(request).andExpect(status().isNotFound());
+
+        mvc.perform(request).andExpect(status().isNotFound()); // Se o objeto estiver vazio ele retorna o erro esperado - NotFound
     }
 
     //Teste de deleção de Books
@@ -164,13 +165,13 @@ public class BookControllerTest {
     @DisplayName( "Deve deletar um book " )
     public void deleteBookTest() throws Exception {
         //Cenário
-        BDDMockito.given(service.getById( Mockito.anyLong() )).willReturn(Optional.of( Book.builder().id(1L).build() ) );
+        BDDMockito.given(service.getById( Mockito.anyLong() )).willReturn(Optional.of( Book.builder().id(1L).build() ) ); // Pega o livro por id no Banco
 
         //execução (when)
-        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.delete(Book_Api.concat("/" + 1));
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders.delete(Book_Api.concat("/" + 1)); // Monta a requisição pra enviar ao Banco
 
-        mvc.perform(request)
-                .andExpect( status().isNoContent() );
+        // Verificação
+        mvc.perform(request).andExpect( status().isNoContent() ); // Verifica se o objeto selecionado por id foi deletado do banco - retorna o erro
     }
 
     //Teste de atualização de Books

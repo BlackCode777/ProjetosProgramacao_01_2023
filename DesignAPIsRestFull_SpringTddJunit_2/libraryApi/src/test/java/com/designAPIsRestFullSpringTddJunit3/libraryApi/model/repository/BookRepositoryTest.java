@@ -11,6 +11,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 // Testando a integração com o banco de dados
@@ -32,12 +34,16 @@ public class BookRepositoryTest {
     public void returnTrueWhenIsbnExists(){
         //Cenário
         String isbn = "123";
-        Book book = Book.builder().title("As aventuras").author("Fulano").isbn(isbn).build();
+        Book book = createNewBook(isbn);
         entityManager.persist(book); // Usado para persistir os dados no banco em memória
         //Execução
         boolean exists = Boolean.parseBoolean(String.valueOf(repository.existsByIsbn(isbn)));
         //Verification
         assertThat(exists).isTrue();
+    }
+
+    private static Book createNewBook(String isbn) {
+        return Book.builder().title("As aventuras").author("Fulano").isbn(isbn).build();
     }
 
     @Test
@@ -52,7 +58,20 @@ public class BookRepositoryTest {
         boolean exists = Boolean.parseBoolean(String.valueOf(repository.existsByIsbn(isbn)));
         //Verification
         assertThat(exists).isFalse();
+    }
 
+    @Test
+    @DisplayName("Deve obter um livro por id")
+    public void findByIdTest(){
+        //Cenario - precisa ter um livro criado no banco
+        Book book = createNewBook("123");
+        entityManager.persist(book);
+
+        // Execução
+        Optional<Book> foundBook = repository.findById(book.getId());
+
+        // Verificação - Se o livro existe e se é verdadeiro
+        assertThat(foundBook.isPresent()).isTrue();
     }
 
 
