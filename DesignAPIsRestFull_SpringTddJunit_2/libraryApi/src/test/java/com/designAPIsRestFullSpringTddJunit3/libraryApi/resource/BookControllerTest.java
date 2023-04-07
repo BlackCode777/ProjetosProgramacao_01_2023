@@ -1,5 +1,6 @@
 package com.designAPIsRestFullSpringTddJunit3.libraryApi.resource;
 
+import com.designAPIsRestFullSpringTddJunit3.libraryApi.controller.BookController;
 import com.designAPIsRestFullSpringTddJunit3.libraryApi.dto.BooKDTO;
 import com.designAPIsRestFullSpringTddJunit3.libraryApi.api.exception.BusinessException;
 import com.designAPIsRestFullSpringTddJunit3.libraryApi.model.entity.Book;
@@ -35,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 @ActiveProfiles("test")
-@WebMvcTest // faz test unitario - testa comportamento API
+@WebMvcTest( controllers = BookController.class) // faz test unitario - testa comportamento API
 @AutoConfigureMockMvc
 public class BookControllerTest {
     //Definir a rota para o teste da API
