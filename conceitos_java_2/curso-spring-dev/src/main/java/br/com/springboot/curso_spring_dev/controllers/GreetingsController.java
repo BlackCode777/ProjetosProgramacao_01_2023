@@ -32,11 +32,12 @@ public class GreetingsController {
 	@Autowired 
 	private UsuarioRepository usuarioRepository;	
 	
-    @RequestMapping(value = "/{name}", method = RequestMethod.GET)
-    @ResponseStatus(HttpStatus.OK)
-    public String greetingText(@PathVariable String name) {
-        return "Hello " + name + "!";
-    }    
+    //@RequestMapping(value = "/{name}", method = RequestMethod.GET)
+    //@ResponseStatus(HttpStatus.OK)
+    //public String greetingText(@PathVariable String name) {
+    //    return "Hello " + name + "!";
+    //}    
+    
     @RequestMapping( value = "/olaMundo/{nome}", method = RequestMethod.GET )
     @ResponseStatus( HttpStatus.OK )
     public String metodoRetorno2( @PathVariable String nome ) {
@@ -85,7 +86,7 @@ public class GreetingsController {
     
     //consultarPorNome
     @GetMapping( value = "buscarPorNome" )
-    @ResponseBody // buscar por nomes - retirando espaços em branco - e filtrando caracteres maiúsculos e minúsculos
+    @ResponseBody // método trim() para retirar o espaço das buscas
     public ResponseEntity<List<Usuario>> buscarPorNome( @RequestParam( name = "nome" ) String nome ){
     	List<Usuario> nomeUser = usuarioRepository.findByName( nome.trim().toUpperCase() ); 
     	return new ResponseEntity<List<Usuario>>( nomeUser, HttpStatus.OK );
