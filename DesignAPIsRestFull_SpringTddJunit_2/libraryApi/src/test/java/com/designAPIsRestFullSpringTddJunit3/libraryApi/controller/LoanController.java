@@ -9,6 +9,7 @@ import com.designAPIsRestFullSpringTddJunit3.libraryApi.service.LoanService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 
@@ -17,21 +18,22 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class LoanController {
 
-    private LoanService loanService;
+    private LoanService service;
     private BookService bookService;
 
     @PostMapping
     @ResponseStatus( HttpStatus.CREATED )
     public Long create( @RequestBody LoanDto dto ){
         // Criando um Book
-        Book book = bookService.getBookByIsbn(dto.getIsbn() ).get();
+        Book book = bookService.getBookByIsbn(dto.getIsbn() )
+                .orElseThrow( () -> new ResponseStatusException( HttpStatus.BAD_REQUEST, "Book not found for passed isbn." ) );
         // Criando um Loan
         Loan entity = Loan.builder()
                         .book( book )
                         .customer( dto.getCustomer() )
                         .loanDate( LocalDate.now() )
                         .build();
-        entity = loanService.save( entity );
+        entity = service.save( entity );
         return entity.getId();
     }
 
