@@ -31,19 +31,7 @@ public class GreetingsController {
 
 	@Autowired 
 	private UsuarioRepository usuarioRepository;	
-	
-    //@RequestMapping(value = "/{name}", method = RequestMethod.GET)
-    //@ResponseStatus(HttpStatus.OK)
-    //public String greetingText(@PathVariable String name) {
-    //    return "Hello " + name + "!";
-    //}    
-    
-    @RequestMapping( value = "/olaMundo/{nome}", method = RequestMethod.GET )
-    @ResponseStatus( HttpStatus.OK )
-    public String metodoRetorno2( @PathVariable String nome ) {
-		return "Ola mundo " + nome;    	
-    }
-    
+	    
     @GetMapping( value = "listaTodos" )
     @ResponseBody//Retorna os dados para o corpo da resposta
     public ResponseEntity<List<Usuario>>  getUsuario() {
@@ -61,7 +49,7 @@ public class GreetingsController {
     @DeleteMapping( value = "delete" )
     @ResponseBody
     public ResponseEntity<String> deletar( @RequestParam Long iduser ){
-    	usuarioRepository.deleteById(iduser);;
+    	usuarioRepository.deleteById(iduser);
     	return new ResponseEntity<String>( "Usuario deletado com sucesso !  ", HttpStatus.OK );
     }
     
@@ -87,8 +75,8 @@ public class GreetingsController {
     //consultarPorNome
     @GetMapping( value = "buscarPorNome" )
     @ResponseBody // método trim() para retirar o espaço das buscas
-    public ResponseEntity<List<Usuario>> buscarPorNome( @RequestParam( name = "nome" ) String nome ){
-    	List<Usuario> nomeUser = usuarioRepository.findByName( nome.trim().toUpperCase() ); 
+    public ResponseEntity<List<Usuario>> buscarPorNome( @RequestBody @RequestParam( name = "name" ) String name ){
+    	List<Usuario> nomeUser = usuarioRepository.findByName( name.trim().toUpperCase() ); 
     	return new ResponseEntity<List<Usuario>>( nomeUser, HttpStatus.OK );
     }
     
