@@ -56,19 +56,6 @@ public class BookController {
         return modelMapper.map( entity, BooKDTO.class);
     }
 
-    @ExceptionHandler( MethodArgumentNotValidException.class )// Tratando os erros nas requisições com a classe MethodArgumentNotValidException.class
-    @ResponseStatus( HttpStatus.BAD_REQUEST )
-    public ApiErrors handleValidationExceptions( MethodArgumentNotValidException ex ){
-        BindingResult bindingResult = ex.getBindingResult(); // criando a instancia de BindingResult para pegar todos os erros da requisição
-        return new ApiErrors( bindingResult );// criando os objetos que vão pegar os erros e vão mandar para a API
-    }
-
-    @ExceptionHandler( BusinessException.class )
-    @ResponseStatus( HttpStatus.BAD_REQUEST )
-    public ApiErrors handleBusinessException( BusinessException ex ){
-          return new ApiErrors( ex );
-    }
-
     @GetMapping("{id}")
     public BooKDTO get( @PathVariable Long id){
         return service.getById( id ).map( book -> modelMapper.map(book, BooKDTO.class  ) )
