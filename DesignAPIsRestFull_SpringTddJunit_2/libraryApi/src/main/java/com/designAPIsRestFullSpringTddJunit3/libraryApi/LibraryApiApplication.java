@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 @SpringBootApplication
 @Configuration
 @EnableAutoConfiguration
-@EntityScan(basePackages = {"com.designAPIsRestFullSpringTddJunit3.libraryApi.model.entity"}) //
+@EntityScan(basePackages = {"com.designAPIsRestFullSpringTddJunit3.libraryApi.model.entity"})
 public class LibraryApiApplication extends SpringBootServletInitializer {
 
 	@Bean

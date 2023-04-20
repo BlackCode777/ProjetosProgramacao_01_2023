@@ -11,6 +11,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 // Testando a integração com o banco de dados
@@ -22,37 +24,78 @@ public class BookRepositoryTest {
     // Teste de integração com banco H2 falhou - objeto de pesquisa
     // como fazer teste de integralção entre banco H2 / mokito /
 
-//    @Autowired // Fundamental para poder usar o TestEntityManager
-//    TestEntityManager entityManager; // esta classe TestEntityManager simula o banco de dados em memoria
-//    @Autowired
-//    BookRepository repository;
+    @Autowired // Fundamental para poder usar o TestEntityManager
+    TestEntityManager entityManager; // esta classe TestEntityManager simula o banco de dados em memoria
+    @Autowired
+    BookRepository repository;
 
-//    @Test
-//    @DisplayName("Deve retornar True quando existir um livro na base de dados com i isbn informado")
-//    public void returnTrueWhenIsbnExists(){
-//        //Cenário
-//        String isbn = "123";
+    @Test
+    @DisplayName("Deve retornar True quando existir um livro na base de dados com i isbn informado")
+    public void returnTrueWhenIsbnExists(){
+        //Cenário
+        String isbn = "123";
+        Book book = createNewBook(isbn);
+        entityManager.persist(book); // Usado para persistir os dados no banco em memória
+        //Execução
+        boolean exists = Boolean.parseBoolean(String.valueOf(repository.existsByIsbn(isbn)));
+        //Verification
+        assertThat(exists).isTrue();
+    }
+
+    private static Book createNewBook(String isbn) {
+        return Book.builder().title("As aventuras").author("Fulano").isbn(isbn).build();
+    }
+
+    @Test
+    @DisplayName("Deve retornar False quando não existir um livro na base de dados com i isbn informado")
+    public void returnFalseWhenIsbnExists(){
+        //Cenário
+        String isbn = "123";
+//        Aqui instancio um objeto Book
 //        Book book = Book.builder().title("As aventuras").author("Fulano").isbn(isbn).build();
 //        entityManager.persist(book); // Usado para persistir os dados no banco em memória
-//        //Execução
-//        boolean exists = Boolean.parseBoolean(String.valueOf(repository.existsByIsbnTrue(isbn)));
-//        //Verification
-//        assertThat(exists).isTrue();
-//    }
+        //Execução
+        boolean exists = Boolean.parseBoolean(String.valueOf(repository.existsByIsbn(isbn)));
+        //Verification
+        assertThat(exists).isFalse();
+    }
 
-//    @Test
-//    @DisplayName("Deve retornar False quando não existir um livro na base de dados com i isbn informado")
-//    public void returnFalseWhenIsbnExists(){
-//        //Cenário
-//        String isbn = "123";
-//        Book book = Book.builder().title("As aventuras").author("Fulano").isbn(isbn).build();
-//        entityManager.persist(book); // Usado para persistir os dados no banco em memória
-//        //Execução
-//        boolean exists = Boolean.parseBoolean(String.valueOf(repository.existsByIsbnTrue(isbn)));
-//        //Verification
-//        assertThat(exists).isFalse();
-//    }
+    @Test
+    @DisplayName("Deve obter um livro por id")
+    public void findByIdTest(){
+        //Cenario - precisa ter um livro criado no banco
+        Book book = createNewBook("123");
+        entityManager.persist(book);
 
+        // Execução
+        Optional<Book> foundBook = repository.findById(book.getId());
 
+        // Verificação - Se o livro existe e se é verdadeiro
+        assertThat(foundBook.isPresent()).isTrue();
+    }
+
+    //Teste de integração para save
+    @Test
+    @DisplayName("Deve salvar um Book.")
+    public void saveBookIntegrationTest(){
+        Book book = createNewBook("123");
+        Book savedBook = repository.save( book );
+        assertThat( savedBook.getId() ).isNotNull();
+    }
+
+    //Teste de integração para método deletarBook()
+    @Test
+    @DisplayName("Deve deletar um Book.")
+    public void deleteBookIntegrationTest(){
+        // Pego o livro
+        Book book = createNewBook("123");
+        //Persisto o livro na base
+        entityManager.persist(book);
+        Book foundBook = entityManager.find( Book.class, book.getId() );
+        // Deleta o Book na base
+        repository.delete(foundBook);
+        Book deletedBook = entityManager.find( Book.class, book.getId() );
+        assertThat( deletedBook ).isNull();
+    }
 
 }
