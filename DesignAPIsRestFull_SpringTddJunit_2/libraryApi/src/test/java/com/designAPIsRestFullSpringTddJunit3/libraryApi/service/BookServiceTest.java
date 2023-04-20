@@ -26,6 +26,7 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.InstanceOfAssertFactories.ARRAY;
 import static org.assertj.core.api.InstanceOfAssertFactories.LIST;
+import static org.mockito.Mockito.*;
 
 
 @ExtendWith(SpringExtension.class)
@@ -51,8 +52,8 @@ public class BookServiceTest { // Teste usado para fazer somente testr unitário
     @DisplayName("Deve salvar um livro")
     public  void saveBookTest(){
         Book book = createValidBook(); //Cenário de teste >>> ERRO AQUI >>> Book book = Book.builder().isbn("123").author("Fulano").title("As aventuras").build(); = solução criar o metodo
-        Mockito.when( repository.existsByIsbn( Mockito.anyString() ) ).thenReturn( false );
-        Mockito.when( repository.save( book ) ).thenReturn( // O teste aqui passa, pq criamos um livro mockado fake
+        when( repository.existsByIsbn( Mockito.anyString() ) ).thenReturn( false );
+        when( repository.save( book ) ).thenReturn( // O teste aqui passa, pq criamos um livro mockado fake
                 Book.builder()
                     .id(1L)
                     .isbn("123")
@@ -75,7 +76,7 @@ public class BookServiceTest { // Teste usado para fazer somente testr unitário
         //cenario
         Book book = createValidBook();
 
-        Mockito.when( repository.existsByIsbn( Mockito.anyString() ) ).thenReturn( true );
+        when( repository.existsByIsbn( Mockito.anyString() ) ).thenReturn( true );
 
         //execução
         final  Throwable exception = catchThrowable( () -> service.save(book) ); // REF -> https://www.tabnine.com/code/java/methods/org.assertj.core.api.Assertions/catchThrowable
@@ -84,7 +85,7 @@ public class BookServiceTest { // Teste usado para fazer somente testr unitário
         assertThat( exception ).isInstanceOf( BusinessException.class ).hasMessage( "Isbn já cadastrado." );
 
         //Verificação - teste da chamada do metodo save() do repository
-        Mockito.verify( repository, Mockito.never() ).save(book);
+        verify( repository, Mockito.never() ).save(book);
     }
 
     @Test
@@ -94,7 +95,7 @@ public class BookServiceTest { // Teste usado para fazer somente testr unitário
         Long id = 1L;
         Book book = createValidBook();
         book.setId(id);
-        Mockito.when(repository.findById(id)).thenReturn(Optional.of(book));
+        when(repository.findById(id)).thenReturn(Optional.of(book));
         //Execução
         Optional<Book> foundBook = service.getById(id);
         //Verificação
@@ -110,7 +111,7 @@ public class BookServiceTest { // Teste usado para fazer somente testr unitário
     public void bookNotFoundById_RetornarFalseTest() throws  Exception {
         // Cenário
         Long id = 1L;
-        Mockito.when(repository.findById(id)).thenReturn(Optional.empty());
+        when(repository.findById(id)).thenReturn(Optional.empty());
         //Execução
         Optional<Book> book = service.getById(id);
         //Verificação
@@ -126,7 +127,7 @@ public class BookServiceTest { // Teste usado para fazer somente testr unitário
         // Execução - usando assertion do Junit
         Assertions.assertDoesNotThrow( () -> service.delete(book) );
         // Aqui eu faço o Mockito verificar se o método delete() é chamado pelo menos na classe BookServiceImple.java
-        Mockito.verify(repository, Mockito.times(1 )).delete(book);
+        verify(repository, Mockito.times(1 )).delete(book);
     }
 
     @Test
@@ -134,7 +135,7 @@ public class BookServiceTest { // Teste usado para fazer somente testr unitário
     public void deleteInvalidBookTest(){
         Book book = new Book();
         org.junit.jupiter.api.Assertions.assertThrows(IllegalArgumentException.class, () -> service.delete(book));
-        Mockito.verify( repository, Mockito.never( ) ).delete(book);
+        verify( repository, Mockito.never( ) ).delete(book);
     }
 
     // Testes para atualizar um Book do registro
@@ -143,7 +144,7 @@ public class BookServiceTest { // Teste usado para fazer somente testr unitário
     public void updateInvalidBookTest(){
         Book book = new Book();
         org.junit.jupiter.api.Assertions.assertThrows(IllegalArgumentException.class, () -> service.update(book));
-        Mockito.verify( repository, Mockito.never( ) ).save(book);
+        verify( repository, Mockito.never( ) ).save(book);
     }
 
     // Testes para atualizar um Book do registro
@@ -157,7 +158,7 @@ public class BookServiceTest { // Teste usado para fazer somente testr unitário
 
         Book updatedBook = createValidBook();
         updatedBook.setId(id);
-        Mockito.when( repository.save( updatingBook ) ).thenReturn( updatedBook );
+        when( repository.save( updatingBook ) ).thenReturn( updatedBook );
 
         // Execução
         Book book = service.update( updatingBook );
@@ -177,7 +178,7 @@ public class BookServiceTest { // Teste usado para fazer somente testr unitário
         PageRequest pageRequest = PageRequest.of( 0, 10 ); // Aqui faz a paginação
         List<Book> lista = Arrays.asList( book );
         Page<Book> page = new PageImpl<Book>( lista, pageRequest, 1 );
-        Mockito.when( repository.findAll( Mockito.any( Example.class ), Mockito.any( PageRequest.class ) ) )
+        when( repository.findAll( Mockito.any( Example.class ), Mockito.any( PageRequest.class ) ) )
                 .thenReturn( page );
 
         // Execução
@@ -190,4 +191,41 @@ public class BookServiceTest { // Teste usado para fazer somente testr unitário
         assertThat( result.getPageable().getPageSize() ).isEqualTo( 10 );
     }
 
+    @Test
+    @DisplayName(" Deve obter um livro pelo ISBN ")
+    public void getBookByIsbn() {
+
+        String isbn = "1230";
+        when( repository.findByIsbn( isbn ) ).thenReturn( Optional.of( Book.builder().id(1L).isbn(isbn).build() ) );
+        // Import statico -
+        //when( Optional.of( Book.builder().id(1L).isbn(isbn).build() ).orElseThrow() );
+        //Mockito.when( repository.findByIsbn( isbn ).orElseThrow() );
+
+        Optional<Book> book = service.getBookByIsbn( isbn );
+
+        assertThat( book.isPresent() ).isTrue();
+        assertThat( book.get().getId() ).isEqualTo( 1L );
+        assertThat( book.get().getIsbn() ).isEqualTo( isbn );
+
+        verify( repository, times(1) ).findByIsbn( isbn );
+
+    }
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

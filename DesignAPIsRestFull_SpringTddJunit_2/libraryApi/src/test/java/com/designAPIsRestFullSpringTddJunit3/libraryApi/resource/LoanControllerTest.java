@@ -132,10 +132,10 @@ public class LoanControllerTest {
                 .content( json );
 
         // Eu espero que seja criada na base um registro - ResultActions resultActions =
-//        mvc.perform( request )
-//                .andExpect( MockMvcResultMatchers.status().isBadRequest() )
-//                .andExpect( jsonPath( "errors", Matchers.hasSize( 1 )) )
-//                .andExpect( jsonPath( "errors[0]" ).value( "Livro ja emprestado!" ) );
+        mvc.perform( request )
+                .andExpect( MockMvcResultMatchers.status().isBadRequest() )
+                .andExpect( jsonPath( "errors", Matchers.hasSize( 1 )) )
+                .andExpect( jsonPath( "errors[0]" ).value( "Livro ja emprestado!" ) );
         //.andExpect( jsonPath("id").value( 1L ) )
         //.andExpect( content().string( "1" ) );
     }
