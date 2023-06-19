@@ -7,8 +7,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface BookRepository extends JpaRepository<Book, Long> {
     boolean existsByIsbnTrue(String isbn);
 
-    //boolean existsByIsbnTrue(String isbn);
-
-    //boolean existByIsbnTrue(String isbn);
-
 }

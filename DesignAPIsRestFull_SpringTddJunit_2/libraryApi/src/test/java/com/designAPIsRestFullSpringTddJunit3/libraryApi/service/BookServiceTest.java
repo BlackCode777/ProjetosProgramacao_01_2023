@@ -4,13 +4,11 @@ import com.designAPIsRestFullSpringTddJunit3.libraryApi.api.exception.BusinessEx
 import com.designAPIsRestFullSpringTddJunit3.libraryApi.model.entity.Book;
 import com.designAPIsRestFullSpringTddJunit3.libraryApi.repository.BookRepository;
 import com.designAPIsRestFullSpringTddJunit3.libraryApi.service.impl.BookServiceImple;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -33,7 +31,7 @@ public class BookServiceTest { // Teste usado para fazer somente testr unitário
         this.service = new BookServiceImple( repository );
     }
 
-    private static Book createValidBook() {
+    public static Book createValidBook() {
         return Book.builder().isbn("123").author("Fulano").title("As aventuras").build();
     }
 
@@ -75,8 +73,5 @@ public class BookServiceTest { // Teste usado para fazer somente testr unitário
         //Verificação - teste da chamada do metodo save() do repository
         Mockito.verify( repository, Mockito.never() ).save(book);
     }
-
-
-
 
 }

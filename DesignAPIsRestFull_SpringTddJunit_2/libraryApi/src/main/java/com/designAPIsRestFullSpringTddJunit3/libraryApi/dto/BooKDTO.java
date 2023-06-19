@@ -1,24 +1,29 @@
 package com.designAPIsRestFullSpringTddJunit3.libraryApi.dto;
 
-import lombok.*;
+import com.designAPIsRestFullSpringTddJunit3.libraryApi.model.entity.Book;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
 
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class BooKDTO {
+//@Data
+//@Builder
+//@NoArgsConstructor
+//@AllArgsConstructor
+public class BooKDTO { //extends Book
 
     public Long id;
 
-    @NotEmpty
+    //@NotEmpty
     public String title;
 
-    @NotEmpty
+    //@NotEmpty
     public String author;
 
-    @NotEmpty
+    //@NotEmpty
     public String isbn;
+    
 
 }

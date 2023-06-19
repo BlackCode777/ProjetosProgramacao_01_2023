@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="8f3d5e96-d9c4-44d1-882f-6a7de3ff9856" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../../DesignAPIsRestFull_SpringTddJunit_2/libraryApi/src/test/java/com/designAPIsRestFullSpringTddJunit3/libraryApi/controller/LoanController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../DesignAPIsRestFull_SpringTddJunit_2/libraryApi/src/test/java/com/designAPIsRestFullSpringTddJunit3/libraryApi/controller/LoanController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../DesignAPIsRestFull_SpringTddJunit_2/libraryApi/src/test/java/com/designAPIsRestFullSpringTddJunit3/libraryApi/resource/LoanControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../DesignAPIsRestFull_SpringTddJunit_2/libraryApi/src/test/java/com/designAPIsRestFullSpringTddJunit3/libraryApi/resource/LoanControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../curso-spring-dev/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../curso-spring-dev/pom.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectId" id="2NokU7ctdBVl0Ior5Yl9nUTm3ke" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="Account" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="ConceitosDeJava" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8f3d5e96-d9c4-44d1-882f-6a7de3ff9856" name="Changes" comment="" />
+      <created>1680337839648</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1680337839648</updated>
+    </task>
+    <servers />
+  </component>
+</project>

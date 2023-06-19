@@ -58,7 +58,7 @@ public class BookControllerTest {
     @DisplayName("Deve criar um livro com sucesso!")
     public void  createBookTest() throws Exception{
 
-        BooKDTO bookDTO = createNewBook();
+        Book bookDTO = createNewBook("123");
 
         Book savedBook = Book.builder().id(13L).title("As aventuras").author("Arthur").isbn("001").build();
 
@@ -77,8 +77,8 @@ public class BookControllerTest {
                 .andExpect( jsonPath( "isbn").value(bookDTO.getIsbn()))
         ;   }
 
-    private static BooKDTO createNewBook() {
-        return BooKDTO.builder().title("As aventuras").author("Arthur").isbn("001").build();
+    public static Book createNewBook(String isbn) {
+        return Book.builder().title("As aventuras").author("Arthur").isbn("001").build();
     }
 
     @Test
@@ -101,7 +101,7 @@ public class BookControllerTest {
     @DisplayName("Deve lançar um erro ao tentar criar um livro com o isbn já existente")
     public void createBookWithDuplicatedIsbn() throws Exception {
 
-        BooKDTO dto = createNewBook();
+        Book dto = createNewBook("123");
         String json = new ObjectMapper().writeValueAsString(dto);//Para validar a existencia de dados precisamos do json dos objetos
         String mensagemErro = "Isbn já cadastrado.";
         BDDMockito.given( service.save( Mockito.any( Book.class ) ) ) // enviando uma mensagem de erro ao salvar um isbn repetido - simulação

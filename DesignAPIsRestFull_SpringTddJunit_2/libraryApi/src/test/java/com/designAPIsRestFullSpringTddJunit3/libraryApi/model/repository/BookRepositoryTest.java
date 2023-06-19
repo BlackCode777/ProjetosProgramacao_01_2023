@@ -20,7 +20,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 public class BookRepositoryTest {
 
     // Teste de integração com banco H2 falhou - objeto de pesquisa
-    // como fazer teste de integralção entre banco H2 / mokito /
+    // como fazer teste de integração entre banco H2 / mokito /
 
 //    @Autowired // Fundamental para poder usar o TestEntityManager
 //    TestEntityManager entityManager; // esta classe TestEntityManager simula o banco de dados em memoria
@@ -53,6 +53,9 @@ public class BookRepositoryTest {
 //        assertThat(exists).isFalse();
 //    }
 
+    public static Book createNewBook(String isbn){
+        return Book.builder().title("Aventuras").author("Fulano").isbn(isbn).build();
+    }
 
 
 }

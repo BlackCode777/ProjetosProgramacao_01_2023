@@ -1,0 +1,5 @@
+INDEX VERSION 1.4+E:\ProjetosProgramacao_2023\ProjetosProgramacao_01_2023\conceitos_java_2\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+1563127729.index
+65808388.index
+577051678.index
+3580038591.index

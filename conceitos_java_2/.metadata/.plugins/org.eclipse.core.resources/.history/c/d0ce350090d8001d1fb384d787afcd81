@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+</head>
+	<body>
+	
+		<div style="padding: 5px; display: flex; justify-content: center">
+			<h3>SpringBoot Rest API - crud completo!</h3>
+		</div>
+			
+		<div style="padding: 50px">
+			<form action=""  id="formCadastroUser">
+		
+				<div class="mb-3">
+				  <label for="id"  class="form-label" readonly="readonly">ID</label>
+				  <input type="text"  class="form-control" id="id" >
+				</div>
+			
+				<div class="mb-3">
+				  <label for="nome" class="form-label">Nome do usuário</label>
+				  <input type="text"  class="form-control" id="nome" >
+				</div>
+				
+				<div class="mb-3">
+				  <label for="idade"  class="form-label">Idade do usuário</label>
+				  <input type="number"  class="form-control" id="idade" >
+				</div>
+			
+			</form>
+			<button type="button"  class="btn btn-primary"  onclick="salvarUsuario()">Salvar</button>
+			<!-- Quando clicar aqui deve limpar todos os campos do formulário -->
+			<button type="button" class="btn btn-success" onclick="document.getElementById('formCadastroUser').reset()">Novo</button>
+			<button type="button" class="btn btn-secondary"  data-bs-toggle="modal"  data-bs-target="#modalPesquisaUser" >Pesquisar</button>
+		</div>	
+		
+		<div class="modal fade" id=modalPesquisaUser tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		    
+		      <div class="modal-header">
+		        <h1 class="modal-title fs-5" id="exampleModalLabel">Pesquisa de Usuarios</h1>
+		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		      </div>
+		      
+		      <div class="modal-body">
+		        <form>
+		        
+		          <div class="mb-3">
+		            <label for="name-busca" class="col-form-label">Informar o nome para buscar</label>
+		            <input type="text" class="form-control" id="name-busca">
+		          </div>
+		          <button type="button" class="btn btn-success" onclick="pesquisaUser()">Buscar</button>
+		          
+		          
+		        </form>
+		        
+		        <!-- Table -->
+		        <table class="table" id="tabela-resultado">
+				  <thead>
+				    <tr>
+				      <th scope="col">Id</th>
+				      <th scope="col">Nome</th>
+				      <th scope="col">Idade</th>
+				      <th scope="col">Editar</th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				    				    
+				  </tbody>
+				</table>
+		        
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	
+		<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    	
+    	<script type="text/javascript">
+    	
+    			function pesquisaUser(){
+    				var nome = $("#name-busca").val()
+    				
+    				if( nome != null && nome.trim() != ' ' ){
+    					
+    					$.ajax({
+    		    			method: "GET",
+    		    			url: "buscarPorNome",
+    		    			data: "name=" + nome,
+    		    			success: function (response){
+    		    				
+    		    				// Jogando os dados dentro da tabela
+    		    				$( '#tabela-resultado > tbody >tr' ).remove()
+    		    				
+    		    				for( var i=0; i<response.length; i++ ){
+    		    					$( '#tabela-resultado > tbody' ).append( '<tr><td>'+response[i].id+'</td><td>'+response[i].nome+'</td><td>'+response[i].idade+'</td><td><button type="button" class="btn btn-warning">Warning</button></td></tr>' )
+    		    				}
+    		    				
+    		    			}
+    		    		}).fail( function ( xhr, status, errorThrown ){
+    		    			alert( "Erro ao tentar buscar dados! " + xhr.responseText );
+    		    		} );
+    					
+    				}
+    				
+    			}
+    		
+		    	function salvarUsuario() {		    		
+		    		var id = $( "#id" ).val();
+		    		var nome = $( "#nome" ).val();
+		    		var idade = $( "#idade" ).val();		    		
+		    		alert( id + " - " +  nome + " - " + idade );		    		
+		    		// salvando os dados com ajax
+		    		$.ajax({
+		    			method: "POST",
+		    			url: "salvar",
+		    			data: JSON.stringify( { id:id, nome:nome, idade:idade } ),
+		    			contentType: "application/json; charset=utf-8",
+		    			success: function (response){
+		    				alert( "Salvo com sucesso!" );
+		    			}
+		    		}).fail( function ( xhr, status, errorThrown ){
+		    			alert( "Erro ao salvar: " + xhr.responseText );
+		    		} );		    		
+		    	}
+    		
+    	
+    	</script>
+    	
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
